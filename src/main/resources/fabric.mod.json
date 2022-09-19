@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "umu_config",
+	"version": "${version}",
+	"name": "UMU Config",
+	"description": "",
+	"authors": [ ],
+	"contact": { },
+	"license": "MIT",
+	"icon": "assets/umu_config/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [ "io.github.zemelua.umu_config.UMUConfig" ],
+		"client": [ "io.github.zemelua.umu_config.client.UMUConfigClient" ],
+		"umu-config": [ "io.github.zemelua.umu_config.UMUConfig" ]
+	},
+	"mixins": [
+		"umu_config.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.9",
+		"fabric": "*",
+		"minecraft": "1.19.2"
+	}
+}
