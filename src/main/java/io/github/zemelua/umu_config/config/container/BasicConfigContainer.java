@@ -7,6 +7,7 @@ import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigValue;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class BasicConfigContainer implements IConfigContainer {
 	private final String name;
@@ -15,6 +16,11 @@ public class BasicConfigContainer implements IConfigContainer {
 	public BasicConfigContainer(String name, IConfigValue<?>... values) {
 		this.name = name;
 		this.values = ImmutableList.copyOf(values);
+	}
+
+	@Override
+	public List<IConfigValue<?>> getValues() {
+		return this.values;
 	}
 
 	@Override

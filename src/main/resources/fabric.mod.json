@@ -12,6 +12,7 @@
 	"entrypoints": {
 		"main": [ "io.github.zemelua.umu_config.UMUConfig" ],
 		"client": [ "io.github.zemelua.umu_config.client.UMUConfigClient" ],
+		"modmenu": [ "io.github.zemelua.umu_config.client.ModMenuImpl" ],
 		"umu-config": [ "io.github.zemelua.umu_config.UMUConfig" ]
 	},
 	"mixins": [
