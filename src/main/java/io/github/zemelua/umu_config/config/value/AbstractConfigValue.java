@@ -20,6 +20,11 @@ public abstract class AbstractConfigValue<T> implements IConfigValue<T> {
 	}
 
 	@Override
+	public void setValue(T value) {
+		this.value = value;
+	}
+
+	@Override
 	public T getDefaultValue() {
 		return this.defaultValue;
 	}

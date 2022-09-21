@@ -1,10 +1,7 @@
 package io.github.zemelua.umu_config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
-import io.github.zemelua.umu_config.serializer.ConfigSerializer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.SerializationException;
 
@@ -16,7 +13,6 @@ import java.nio.file.Path;
 
 public class ConfigHandler {
 	public static final Gson GSON = new GsonBuilder()
-			.registerTypeHierarchyAdapter(IConfigContainer.class, new ConfigSerializer())
 			.setPrettyPrinting()
 			.create();
 
@@ -24,9 +20,10 @@ public class ConfigHandler {
 		Path configPath = config.getPath();
 
 		try {
-			Files.createDirectories(configPath.getParent());
+			JsonObject fileJson = getOrCreateFileJson(configPath);
+			config.saveTo(fileJson);
 			BufferedWriter writer = Files.newBufferedWriter(configPath);
-			GSON.toJson(config, writer);
+			GSON.toJson(fileJson, writer);
 			writer.close();
 		} catch (IOException exception) {
 			throw new SerializationException(exception);
@@ -37,12 +34,42 @@ public class ConfigHandler {
 		Path configPath = config.getPath();
 
 		try {
-			BufferedReader reader = Files.newBufferedReader(configPath);
-			JsonObject jsonObject = GSON.fromJson(reader, JsonObject.class);
-			config.loadFrom(jsonObject);
+			config.loadFrom(getOrCreateFileJson(configPath));
 		} catch (IOException exception) {
 			throw new SerializationException(exception);
 		}
+	}
+
+	private static JsonObject getOrCreateFileJson(Path configPath) throws IOException {
+		JsonObject fileJson;
+
+		try {
+			BufferedReader reader = Files.newBufferedReader(configPath);
+			fileJson = JsonParser.parseReader(reader).getAsJsonObject();
+			reader.close();
+		} catch (IOException | JsonSyntaxException exception) {
+			fileJson = createFileJson(configPath);
+			UMUConfig.LOGGER.info(
+					"The file did not exist or was not in the correct format, so a new config file {} was generated.",
+					configPath.getFileName().toString()
+			);
+		}
+
+		return fileJson;
+	}
+
+	private static JsonObject createFileJson(Path configPath) throws IOException {
+		if (!Files.exists(configPath)) {
+			Files.createDirectories(configPath.getParent());
+			Files.createFile(configPath);
+		}
+
+		BufferedWriter writer = Files.newBufferedWriter(configPath);
+		JsonObject createdJson = new JsonObject();
+		GSON.toJson(createdJson, writer);
+		writer.close();
+
+		return createdJson;
 	}
 
 

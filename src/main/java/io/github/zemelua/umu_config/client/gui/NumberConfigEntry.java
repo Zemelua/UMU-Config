@@ -2,23 +2,22 @@ package io.github.zemelua.umu_config.client.gui;
 
 import com.google.common.collect.ImmutableList;
 import io.github.zemelua.umu_config.config.IConfigValue;
-import io.github.zemelua.umu_config.config.value.IBooleanConfigValue;
+import io.github.zemelua.umu_config.config.value.INumberConfigValue;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
-import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfigValue> extends AbstractConfigEntry<Boolean, V> {
-	private final ButtonWidget editor;
+public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INumberConfigValue<T>> extends AbstractConfigEntry<T, V> {
+	private final SliderEditor editor = new SliderEditor(20);
 
-	public BooleanConfigEntry(V config) {
+	public NumberConfigEntry(V config) {
 		super(config);
 
-		this.editor = new ButtonWidget(0, 0, 0, 20, Text.empty(), (button) -> this.modifyingValue = !this.modifyingValue);
+		this.editor.setValue(NumberConfigEntry.this.config.convert(this.modifyingValue));
 	}
 
 	@Override
@@ -26,7 +25,8 @@ public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfig
 		this.editor.x = x + entryWidth / 2;
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.x);
 		this.editor.y = y;
-		this.editor.setMessage(BooleanConfigEntry.this.modifyingValue ? ScreenTexts.ON : ScreenTexts.OFF);
+		this.editor.applyValue();
+		this.editor.updateMessage();
 		this.editor.render(matrices, mouseX, mouseY, tickDelta);
 	}
 
@@ -54,5 +54,35 @@ public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfig
 	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 		return super.mouseReleased(mouseX, mouseY, button) || this.editor.mouseReleased(mouseX, mouseY, button);
+	}
+
+	@Override
+	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY) || this.editor.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+	}
+
+	@Override
+	protected void onReset() {
+		this.editor.setValue(NumberConfigEntry.this.config.convert(this.modifyingValue));
+	}
+
+	private class SliderEditor extends SliderWidget {
+		public SliderEditor(int height) {
+			super(0, 0, 0, height, Text.empty(), 0.0D);
+		}
+
+		@Override
+		protected void updateMessage() {
+			this.setMessage(NumberConfigEntry.this.config.getValueText(this.getConvertedValue()));
+		}
+
+		@Override
+		protected void applyValue() {
+			NumberConfigEntry.this.modifyingValue = this.getConvertedValue();
+		}
+
+		private T getConvertedValue() {
+			return NumberConfigEntry.this.config.convert(this.value);
+		}
 	}
 }

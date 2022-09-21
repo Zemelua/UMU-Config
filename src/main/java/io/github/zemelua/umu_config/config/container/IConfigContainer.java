@@ -7,9 +7,13 @@ import java.nio.file.Path;
 import java.util.List;
 
 public interface IConfigContainer {
+	String getName();
+
 	List<IConfigValue<?>> getValues();
 
 	Path getPath();
+
+	void insertIfAbsent(JsonObject fileJson);
 
 	void saveTo(JsonObject fileJson);
 

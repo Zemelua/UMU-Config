@@ -14,21 +14,24 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public abstract class AbstractConfigEntry<T> extends Entry<AbstractConfigEntry<?>> {
-	protected final ConfigScreen.ConfigListWidget parent;
-	protected final IConfigValue<T> config;
+public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends Entry<AbstractConfigEntry<?, ?>> {
+	protected final V config;
 	protected final ButtonWidget resetButton;
 
 	protected T modifyingValue;
 
-	public AbstractConfigEntry(ConfigScreen.ConfigListWidget parent, IConfigValue<T> config) {
-		this.parent = parent;
+	public AbstractConfigEntry(V config) {
 		this.config = config;
 		this.resetButton = new ButtonWidget(0, 0, 50, 20, Text.translatable("controls.reset"), button -> {
 			this.modifyingValue = this.config.getDefaultValue();
+			this.onReset();
 		});
 
 		this.modifyingValue = this.config.getValue();
+	}
+
+	public void applyValue() {
+		this.config.setValue(this.modifyingValue);
 	}
 
 	@Override
@@ -70,4 +73,6 @@ public abstract class AbstractConfigEntry<T> extends Entry<AbstractConfigEntry<?
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 		return this.resetButton.mouseReleased(mouseX, mouseY, button);
 	}
+
+	protected void onReset() {}
 }

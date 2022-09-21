@@ -19,6 +19,11 @@ public class BasicConfigContainer implements IConfigContainer {
 	}
 
 	@Override
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
 	public List<IConfigValue<?>> getValues() {
 		return this.values;
 	}
@@ -26,6 +31,13 @@ public class BasicConfigContainer implements IConfigContainer {
 	@Override
 	public Path getPath() {
 		return ConfigHandler.getConfigPath().resolve(this.name + ".json");
+	}
+
+	@Override
+	public void insertIfAbsent(JsonObject fileJson) {
+		this.values.stream()
+				.filter(value -> !fileJson.has(value.getName()))
+				.forEach(value -> value.saveTo(fileJson));
 	}
 
 	@Override

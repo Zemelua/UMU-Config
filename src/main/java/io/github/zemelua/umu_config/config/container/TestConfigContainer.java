@@ -10,6 +10,11 @@ import java.util.List;
 public class TestConfigContainer implements IConfigContainer {
 	public boolean testBool;
 
+	@Override
+	public String getName() {
+		return null;
+	}
+
 	@Override public List<IConfigValue<?>> getValues() {
 		return null;
 	}
@@ -20,12 +25,19 @@ public class TestConfigContainer implements IConfigContainer {
 	}
 
 	@Override
+	public void insertIfAbsent(JsonObject fileJson) {
+		fileJson.addProperty("testBool", this.testBool);
+	}
+
+	@Override
 	public void saveTo(JsonObject fileJson) {
 		fileJson.addProperty("testBool", this.testBool);
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
-		this.testBool = fileJson.get("testBool").getAsBoolean();
+		if (fileJson.has("testBool")) {
+			this.testBool = fileJson.get("testBool").getAsBoolean();
+		}
 	}
 }
