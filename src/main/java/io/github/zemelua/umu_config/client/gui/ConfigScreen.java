@@ -1,8 +1,11 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.KeybindsScreen;
@@ -17,6 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static io.github.zemelua.umu_config.network.NetworkHandler.*;
 
 public class ConfigScreen extends Screen {
 	private final Screen parent;
@@ -34,11 +40,23 @@ public class ConfigScreen extends Screen {
 		this.configListWidget = new ConfigListWidget();
 		this.cancelButton = new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(parent));
-		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button
-				-> this.configListWidget.configEntries.forEach(configEntry -> {
-			configEntry.applyValue();
+		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
+
+			UMUConfig.LOGGER.info("test");
+			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			ConfigHandler.saveFrom(ConfigScreen.this.config);
-		}));
+			UMUConfig.LOGGER.info(this.client == null);
+			if (this.client != null) {
+				if (this.client.world == null) {
+					UMUConfig.LOGGER.info("ser");
+				} else if (this.client.isIntegratedServerRunning() && !Objects.requireNonNull(this.client.getServer()).isRemote()) {
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+				} else {
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+				}
+			}
+			MinecraftClient.getInstance().setScreen(this.parent);
+		});
 	}
 
 	@Override
@@ -46,12 +64,23 @@ public class ConfigScreen extends Screen {
 		this.configListWidget = new ConfigListWidget();
 		this.cancelButton = new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(this.parent));
-		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button
-				-> this.configListWidget.configEntries.forEach(configEntry -> {
-			configEntry.applyValue();
+		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
+
+			UMUConfig.LOGGER.info("test");
+			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			ConfigHandler.saveFrom(ConfigScreen.this.config);
+			UMUConfig.LOGGER.info(this.client == null);
+			if (this.client != null) {
+				if (this.client.world == null) {
+					UMUConfig.LOGGER.info("ser");
+				} else if (this.client.isIntegratedServerRunning() && !Objects.requireNonNull(this.client.getServer()).isRemote()) {
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+				} else {
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+				}
+			}
 			MinecraftClient.getInstance().setScreen(this.parent);
-		}));
+		});
 
 		this.addDrawableChild(this.configListWidget);
 		this.addDrawableChild(this.cancelButton);

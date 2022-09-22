@@ -23,8 +23,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}") { transitive(false) }
-	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}") { transitive(false) }
+	modCompileOnly ("com.terraformersmc:modmenu:${project.modmenu_version}") { transitive(false) }
+	modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}") { transitive(false) }
 }
 
 processResources {

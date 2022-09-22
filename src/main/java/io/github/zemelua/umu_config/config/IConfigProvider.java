@@ -4,6 +4,6 @@ import io.github.zemelua.umu_config.config.container.IConfigContainer;
 
 import java.util.Collection;
 
-public interface IModConfig {
+public interface IConfigProvider {
 	Collection<IConfigContainer> getConfigs();
 }

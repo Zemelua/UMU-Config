@@ -1,16 +1,17 @@
 package io.github.zemelua.umu_config;
 
+import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigValue;
-import io.github.zemelua.umu_config.config.IModConfig;
+import io.github.zemelua.umu_config.config.IConfigProvider;
 import io.github.zemelua.umu_config.config.container.BasicConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.container.TestConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
 import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UMUConfig implements ModInitializer, IModConfig {
+public class UMUConfig implements ModInitializer, IConfigProvider {
+	public static final String MOD_ID = "umu_config";
 	public static final Logger LOGGER = LogManager.getLogger("UMU-Config");
 
 	public static final IConfigValue<Integer> INT_CONFIG_VALUE_EXAMPLE = new IntegerConfigValue(
@@ -37,14 +39,13 @@ public class UMUConfig implements ModInitializer, IModConfig {
 
 	@Override
 	public void onInitialize() {
-		List<EntrypointContainer<IModConfig>> modConfigs = FabricLoader.getInstance().getEntrypointContainers("umu-config", IModConfig.class);
-		modConfigs.forEach(entrypoint -> {
-			IModConfig modConfig = entrypoint.getEntrypoint();
-			CONFIGS.addAll(modConfig.getConfigs());
-		});
 
-		CONFIGS.forEach(ConfigHandler::loadTo);
-		CONFIGS.forEach(ConfigHandler::saveFrom);
+		NetworkHandler.initialize();
+		ConfigManager.initialize();
+	}
+
+	public static Identifier identifier(String path) {
+		return new Identifier(MOD_ID, path);
 	}
 
 	@Override

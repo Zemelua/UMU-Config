@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 	public NumberConfigEntry(V config) {
 		super(config);
 
-		this.editor.setValue(NumberConfigEntry.this.config.convert(this.modifyingValue));
+		this.editor.setValue(this.modifyingValue);
 	}
 
 	@Override
@@ -79,6 +80,11 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 		@Override
 		protected void applyValue() {
 			NumberConfigEntry.this.modifyingValue = this.getConvertedValue();
+		}
+
+		private void setValue(T value) {
+			this.value = MathHelper.clamp(NumberConfigEntry.this.config.convert(value), 0.0D, 1.0D);
+			this.updateMessage();
 		}
 
 		private T getConvertedValue() {
