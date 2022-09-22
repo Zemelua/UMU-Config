@@ -1,6 +1,5 @@
 package io.github.zemelua.umu_config.client.gui;
 
-import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
@@ -13,6 +12,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.annotation.Debug;
@@ -20,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static io.github.zemelua.umu_config.network.NetworkHandler.*;
 
@@ -44,15 +44,18 @@ public class ConfigScreen extends Screen {
 
 			UMUConfig.LOGGER.info("test");
 			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
-			ConfigHandler.saveFrom(ConfigScreen.this.config);
 			UMUConfig.LOGGER.info(this.client == null);
 			if (this.client != null) {
 				if (this.client.world == null) {
 					UMUConfig.LOGGER.info("ser");
-				} else if (this.client.isIntegratedServerRunning() && !Objects.requireNonNull(this.client.getServer()).isRemote()) {
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
 				} else {
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+					PacketByteBuf packet = PacketByteBufs.create();
+					NbtCompound values = new NbtCompound();
+					this.config.loadFrom(values);
+					packet.writeString(this.config.getName());
+					packet.writeNbt(values);
+
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, packet);
 				}
 			}
 			MinecraftClient.getInstance().setScreen(this.parent);
@@ -68,16 +71,26 @@ public class ConfigScreen extends Screen {
 
 			UMUConfig.LOGGER.info("test");
 			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
-			ConfigHandler.saveFrom(ConfigScreen.this.config);
 			UMUConfig.LOGGER.info(this.client == null);
 			if (this.client != null) {
 				if (this.client.world == null) {
 					UMUConfig.LOGGER.info("ser");
-				} else if (this.client.isIntegratedServerRunning() && !Objects.requireNonNull(this.client.getServer()).isRemote()) {
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
 				} else {
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+					PacketByteBuf packet = PacketByteBufs.create();
+					NbtCompound values = new NbtCompound();
+					this.config.loadFrom(values);
+					packet.writeString(this.config.getName());
+					packet.writeNbt(values);
+
+					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, packet);
 				}
+//				if (this.client.world == null) {
+//					UMUConfig.LOGGER.info("ser");
+//				} else if (this.client.isIntegratedServerRunning() && !Objects.requireNonNull(this.client.getServer()).isRemote()) {
+//					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+//				} else {
+//					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, PacketByteBufs.create());
+//				}
 			}
 			MinecraftClient.getInstance().setScreen(this.parent);
 		});

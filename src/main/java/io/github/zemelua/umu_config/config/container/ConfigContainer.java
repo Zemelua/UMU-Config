@@ -5,15 +5,16 @@ import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigValue;
+import net.minecraft.nbt.NbtCompound;
 
 import java.nio.file.Path;
 import java.util.List;
 
-public class BasicConfigContainer implements IConfigContainer {
+public class ConfigContainer implements IConfigContainer {
 	private final String name;
 	private final ImmutableList<IConfigValue<?>> values;
 
-	public BasicConfigContainer(String name, IConfigValue<?>... values) {
+	public ConfigContainer(String name, IConfigValue<?>... values) {
 		this.name = name;
 		this.values = ImmutableList.copyOf(values);
 	}
@@ -34,24 +35,31 @@ public class BasicConfigContainer implements IConfigContainer {
 	}
 
 	@Override
-	public void insertIfAbsent(JsonObject fileJson) {
-		this.values.stream()
-				.filter(value -> !fileJson.has(value.getName()))
-				.forEach(value -> value.saveTo(fileJson));
-	}
-
-	@Override
 	public void saveTo(JsonObject fileJson) {
 		this.values.forEach(value -> value.saveTo(fileJson));
 
-		UMUConfig.LOGGER.info("Saved config: " + this.name);
+		UMUConfig.LOGGER.info("Saved config from file: " + this.name);
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
 		this.values.forEach(value -> value.loadFrom(fileJson));
 
-		UMUConfig.LOGGER.info("Loaded config: " + this.name);
+		UMUConfig.LOGGER.info("Loaded config from file: " + this.name);
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendNBT) {
+		this.values.forEach(value -> value.saveTo(sendNBT));
+
+		UMUConfig.LOGGER.info("Saved config from packet: " + this.name);
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		this.values.forEach(value -> value.loadFrom(receivedNBT));
+
+		UMUConfig.LOGGER.info("Loaded config from packet: " + this.name);
 	}
 
 	public static class Builder {
@@ -61,8 +69,8 @@ public class BasicConfigContainer implements IConfigContainer {
 			this.name = name;
 		}
 
-		public BasicConfigContainer build() {
-			return new BasicConfigContainer(this.name);
+		public ConfigContainer build() {
+			return new ConfigContainer(this.name);
 		}
 	}
 }

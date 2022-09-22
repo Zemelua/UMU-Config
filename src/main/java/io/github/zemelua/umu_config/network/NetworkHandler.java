@@ -1,6 +1,5 @@
 package io.github.zemelua.umu_config.network;
 
-import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.UMUConfig;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.NbtCompound;
@@ -15,8 +14,7 @@ public final class NetworkHandler {
 			final NbtCompound values = packet.readNbt();
 
 			server.execute(() -> {
-				UMUConfig.LOGGER.info(server.isRemote() + ": " + ConfigHandler.getConfigPath().toString());
-				UMUConfig.LOGGER.info(server.getClass().getName());
+				PacketHandlers.saveConfig(configName, values);
 			});
 		});
 	}

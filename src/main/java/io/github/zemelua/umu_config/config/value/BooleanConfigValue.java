@@ -5,6 +5,7 @@ import io.github.zemelua.umu_config.client.gui.AbstractConfigEntry;
 import io.github.zemelua.umu_config.client.gui.BooleanConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 
 import static net.fabricmc.api.EnvType.*;
@@ -23,6 +24,18 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements 
 	public void loadFrom(JsonObject fileJson) {
 		if (fileJson.has(this.name)) {
 			this.value = fileJson.get(this.name).getAsBoolean();
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendNBT) {
+		sendNBT.putBoolean(this.name, this.value);
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.name)) {
+			this.value = receivedNBT.getBoolean(this.name);
 		}
 	}
 

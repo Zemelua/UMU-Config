@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.config.value;
 
 import com.google.gson.JsonObject;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -20,6 +21,18 @@ public class IntegerConfigValue extends AbstractNumberConfigValue<Integer> {
 	public void loadFrom(JsonObject fileJson) {
 		if (fileJson.has(this.name)) {
 			this.value = fileJson.get(this.name).getAsInt();
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendNBT) {
+		sendNBT.putInt(this.name, this.value);
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.name)) {
+			this.value = receivedNBT.getInt(this.name);
 		}
 	}
 
