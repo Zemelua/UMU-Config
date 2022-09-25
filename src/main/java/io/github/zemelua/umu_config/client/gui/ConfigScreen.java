@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.KeybindsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
@@ -16,7 +15,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
-import net.minecraft.util.annotation.Debug;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class ConfigScreen extends Screen {
 	private final Screen parent;
 	private final IConfigContainer config;
 
-	@NotNull private ConfigListWidget configListWidget;
+	@NotNull private ConfigScreen.ValueListWidget valueListWidget;
 	@NotNull private ClickableWidget cancelButton;
 	@NotNull private ClickableWidget applyButton;
 
@@ -37,21 +35,18 @@ public class ConfigScreen extends Screen {
 		this.parent = parent;
 		this.config = config;
 
-		this.configListWidget = new ConfigListWidget();
+		this.valueListWidget = new ValueListWidget();
 		this.cancelButton = new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(parent));
 		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
-
-			UMUConfig.LOGGER.info("test");
-			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
-			UMUConfig.LOGGER.info(this.client == null);
+			this.valueListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			if (this.client != null) {
 				if (this.client.world == null) {
 					UMUConfig.LOGGER.info("ser");
 				} else {
 					PacketByteBuf packet = PacketByteBufs.create();
 					NbtCompound values = new NbtCompound();
-					this.config.loadFrom(values);
+					this.config.saveTo(values);
 					packet.writeString(this.config.getName());
 					packet.writeNbt(values);
 
@@ -64,13 +59,13 @@ public class ConfigScreen extends Screen {
 
 	@Override
 	protected void init() {
-		this.configListWidget = new ConfigListWidget();
+		this.valueListWidget = new ValueListWidget();
 		this.cancelButton = new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(this.parent));
 		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
 
 			UMUConfig.LOGGER.info("test");
-			this.configListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
+			this.valueListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			UMUConfig.LOGGER.info(this.client == null);
 			if (this.client != null) {
 				if (this.client.world == null) {
@@ -78,7 +73,7 @@ public class ConfigScreen extends Screen {
 				} else {
 					PacketByteBuf packet = PacketByteBufs.create();
 					NbtCompound values = new NbtCompound();
-					this.config.loadFrom(values);
+					this.config.saveTo(values);
 					packet.writeString(this.config.getName());
 					packet.writeNbt(values);
 
@@ -95,7 +90,7 @@ public class ConfigScreen extends Screen {
 			MinecraftClient.getInstance().setScreen(this.parent);
 		});
 
-		this.addDrawableChild(this.configListWidget);
+		this.addDrawableChild(this.valueListWidget);
 		this.addDrawableChild(this.cancelButton);
 		this.addDrawableChild(this.applyButton);
 	}
@@ -103,16 +98,16 @@ public class ConfigScreen extends Screen {
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		this.renderBackground(matrices);
-		this.configListWidget.render(matrices, mouseX, mouseY, delta);
-		KeybindsScreen.drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 
 		super.render(matrices, mouseX, mouseY, delta);
+
+		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 	}
 
-	public class ConfigListWidget extends ElementListWidget<AbstractConfigEntry<?, ?>> {
+	public class ValueListWidget extends ElementListWidget<AbstractConfigEntry<?, ?>> {
 		private final List<AbstractConfigEntry<?, ?>> configEntries = new ArrayList<>();
 
-		public ConfigListWidget() {
+		public ValueListWidget() {
 			super(ConfigScreen.this.client, ConfigScreen.this.width, ConfigScreen.this.height, 20, ConfigScreen.this.height - 32, 24);
 
 			for (IConfigValue<?> value : ConfigScreen.this.config.getValues()) {
@@ -137,16 +132,6 @@ public class ConfigScreen extends Screen {
 		@Override
 		protected int getScrollbarPositionX() {
 			return this.getRowRight() + 6;
-		}
-
-		@Debug
-		public int left() {
-			return this.left;
-		}
-
-		@Debug
-		public int width() {
-			return this.width;
 		}
 	}
 }

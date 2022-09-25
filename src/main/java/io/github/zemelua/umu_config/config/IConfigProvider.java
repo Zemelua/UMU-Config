@@ -2,8 +2,8 @@ package io.github.zemelua.umu_config.config;
 
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IConfigProvider {
-	Collection<IConfigContainer> getConfigs();
+	List<IConfigContainer> getConfigs();
 }
