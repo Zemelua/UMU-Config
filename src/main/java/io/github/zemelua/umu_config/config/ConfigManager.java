@@ -8,19 +8,24 @@ import io.github.zemelua.umu_config.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
+import static io.github.zemelua.umu_config.network.NetworkHandler.*;
 import static net.fabricmc.api.EnvType.*;
 
 public final class ConfigManager {
@@ -55,6 +60,30 @@ public final class ConfigManager {
 
 		streamClient().forEach(ConfigHandler::loadTo);
 		streamClient().forEach(ConfigHandler::saveFrom);
+	}
+
+	public static void sendToServer(IConfigContainer config) {
+		PacketByteBuf packet = PacketByteBufs.create();
+		NbtCompound values = new NbtCompound();
+		config.saveTo(values);
+		packet.writeString(config.getName());
+		packet.writeNbt(values);
+
+		if (MinecraftClient.getInstance().isIntegratedServerRunning() && !Objects.requireNonNull(MinecraftClient.getInstance().getServer()).isRemote()) {
+			ClientPlayNetworking.send(CHANNEL_SYNC_SINGLEPLAY_CONFIG, packet);
+		} else {
+			ClientPlayNetworking.send(CHANNEL_SYNC_MULTIPLAY_CONFIG, packet);
+		}
+	}
+
+	public static void sendToClient(ServerPlayerEntity player, IConfigContainer config) {
+		PacketByteBuf packet = PacketByteBufs.create();
+		NbtCompound values = new NbtCompound();
+		config.saveTo(values);
+		packet.writeString(config.getName());
+		packet.writeNbt(values);
+
+		ServerPlayNetworking.send(player, CHANNEL_SYNC_CONFIG_TO_CLIENT, packet);
 	}
 
 	@Environment(SERVER)

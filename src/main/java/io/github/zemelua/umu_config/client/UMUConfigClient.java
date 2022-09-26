@@ -6,6 +6,7 @@ import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
+import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.Environment;
 
@@ -24,6 +25,7 @@ public class UMUConfigClient implements ClientModInitializer, IConfigProvider {
 	@Override
 	public void onInitializeClient() {
 		ConfigManager.initializeClient();
+		NetworkHandler.initializeClient();
 	}
 
 	@Override

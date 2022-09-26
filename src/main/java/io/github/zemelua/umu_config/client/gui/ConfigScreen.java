@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.UMUConfig;
+import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -49,7 +50,7 @@ public class ConfigScreen extends Screen {
 					packet.writeString(this.config.getName());
 					packet.writeNbt(values);
 
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, packet);
+					ClientPlayNetworking.send(CHANNEL_SYNC_SINGLEPLAY_CONFIG, packet);
 				}
 			}
 			MinecraftClient.getInstance().setScreen(this.parent);
@@ -74,7 +75,7 @@ public class ConfigScreen extends Screen {
 					packet.writeString(this.config.getName());
 					packet.writeNbt(values);
 
-					ClientPlayNetworking.send(CHANNEL_SAVE_CONFIG, packet);
+					ClientPlayNetworking.send(CHANNEL_SYNC_SINGLEPLAY_CONFIG, packet);
 				}
 //				if (this.client.world == null) {
 //					UMUConfig.LOGGER.info("ser");

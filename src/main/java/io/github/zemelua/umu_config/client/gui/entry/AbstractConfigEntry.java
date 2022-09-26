@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_config.client.gui;
+package io.github.zemelua.umu_config.client.gui.entry;
 
 import com.google.common.collect.ImmutableList;
 import io.github.zemelua.umu_config.config.IConfigValue;

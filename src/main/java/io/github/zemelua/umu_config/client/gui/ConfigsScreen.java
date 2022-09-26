@@ -116,7 +116,7 @@ public class ConfigsScreen extends Screen {
 		protected final class CommonConfigEntry extends ConfigEntry {
 			private CommonConfigEntry(IConfigContainer config) {
 				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, Text.literal(config.getName()), button
-						-> MinecraftClient.getInstance().setScreen(new ClientConfigScreen(ConfigsScreen.this, config))));
+						-> MinecraftClient.getInstance().setScreen(new CommonConfigScreen(ConfigsScreen.this, config))));
 			}
 		}
 

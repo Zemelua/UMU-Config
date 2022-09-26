@@ -1,8 +1,8 @@
 package io.github.zemelua.umu_config.config.value;
 
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.client.gui.AbstractConfigEntry;
-import io.github.zemelua.umu_config.client.gui.BooleanConfigEntry;
+import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.client.gui.entry.BooleanConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;

@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
+import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.MinecraftClient;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract sealed class AbstractConfigScreen extends Screen permits ClientConfigScreen {
+public abstract sealed class AbstractConfigScreen extends Screen permits CommonConfigScreen, ClientConfigScreen {
 	protected final Screen parent;
 	protected final IConfigContainer config;
 
@@ -64,7 +65,10 @@ public abstract sealed class AbstractConfigScreen extends Screen permits ClientC
 	}
 
 	private ClickableWidget createApplyButton() {
-		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), this::applyValues);
+		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
+			this.applyValues(button);
+			MinecraftClient.getInstance().setScreen(this.parent);;
+		});
 	}
 
 	protected abstract void applyValues(ClickableWidget button);
