@@ -19,6 +19,7 @@ public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfig
 		super(config);
 
 		this.editor = new ButtonWidget(0, 0, 0, 20, Text.empty(), (button) -> this.modifyingValue = !this.modifyingValue);
+		this.clickableWidgets.add(this.editor);
 	}
 
 	@Override

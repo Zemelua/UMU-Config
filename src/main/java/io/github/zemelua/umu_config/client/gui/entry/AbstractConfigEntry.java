@@ -8,17 +8,21 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget.Entry;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends Entry<AbstractConfigEntry<?, ?>> {
 	protected final V config;
 	protected final ButtonWidget resetButton;
+	protected final List<ClickableWidget> clickableWidgets = new ArrayList<>();
 
 	protected T modifyingValue;
+	private boolean canEdit = true;
 
 	public AbstractConfigEntry(V config) {
 		this.config = config;
@@ -28,6 +32,7 @@ public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends 
 		});
 
 		this.modifyingValue = this.config.getValue();
+		this.clickableWidgets.add(this.resetButton);
 	}
 
 	public void applyValue() {
@@ -38,6 +43,8 @@ public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends 
 	public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
+		this.clickableWidgets.forEach(clickable -> clickable.active = this.canEdit);
+
 		if (hovered) {
 			DrawableHelper.fill(matrices, x, y, x + entryWidth, y + entryHeight, 0x24FFFFFF);
 		}
@@ -46,13 +53,17 @@ public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends 
 
 		this.resetButton.x = x + entryWidth - 60;
 		this.resetButton.y = y + entryHeight / 2 - this.resetButton.getHeight() / 2;
-		this.resetButton.active = this.modifyingValue != this.config.getDefaultValue();
+		this.resetButton.active = this.canEdit && this.modifyingValue != this.config.getDefaultValue();
 		this.resetButton.render(matrices, mouseX, mouseY, tickDelta);
 
 		this.renderEditor(matrices, x, y, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
 	}
 
 	protected abstract void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta);
+
+	public void setCanEdit(boolean value) {
+		this.canEdit = value;
+	}
 
 	@Override
 	public List<? extends Element> children() {

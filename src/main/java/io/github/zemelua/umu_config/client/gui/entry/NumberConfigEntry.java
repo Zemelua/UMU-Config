@@ -19,6 +19,7 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 		super(config);
 
 		this.editor.setValue(this.modifyingValue);
+		this.clickableWidgets.add(this.editor);
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 
 	@Override
 	protected void onReset() {
-		this.editor.setValue(NumberConfigEntry.this.config.convert(this.modifyingValue));
+		this.editor.setValue(this.modifyingValue);
 	}
 
 	private class SliderEditor extends SliderWidget {

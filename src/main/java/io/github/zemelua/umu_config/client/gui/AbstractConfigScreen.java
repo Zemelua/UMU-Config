@@ -25,7 +25,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 	@NotNull protected ClickableWidget applyButton;
 
 	public AbstractConfigScreen(Screen parent, IConfigContainer config) {
-		super(Text.translatable("umu_config." + config.getName() + "title"));
+		super(Text.translatable("umu_config." + config.getName() + ".title").append(Text.literal(" (Read Only)")));
 		this.parent = parent;
 		this.config = config;
 
