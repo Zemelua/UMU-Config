@@ -32,7 +32,7 @@ public final class NetworkHandler {
 
 	@Environment(CLIENT)
 	public static void initializeClient() {
-		ClientPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_SINGLEPLAY_CONFIG, (client, handler, packet, sender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_CONFIG_TO_CLIENT, (client, handler, packet, sender) -> {
 			final String configName = packet.readString();
 			final NbtCompound values = packet.readNbt();
 

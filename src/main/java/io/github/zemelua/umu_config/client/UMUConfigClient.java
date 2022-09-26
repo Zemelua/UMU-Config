@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_config.client;
 
+import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigProvider;
 import io.github.zemelua.umu_config.config.IConfigValue;
@@ -9,6 +10,7 @@ import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
 import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class UMUConfigClient implements ClientModInitializer, IConfigProvider {
 	public void onInitializeClient() {
 		ConfigManager.initializeClient();
 		NetworkHandler.initializeClient();
+
+		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ConfigManager.stream()
+				.forEach(ConfigHandler::loadTo));
 	}
 
 	@Override
