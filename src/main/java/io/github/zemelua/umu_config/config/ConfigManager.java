@@ -26,7 +26,7 @@ import static net.fabricmc.api.EnvType.*;
 public final class ConfigManager {
 	@NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
 	@Environment(CLIENT) @NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CLIENT_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
-	@Environment(SERVER) @NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> SERVER_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
+	@Environment(SERVER) @NotNull @SuppressWarnings({"unused", "FieldMayBeFinal"}) private static ImmutableMap<String, ImmutableList<IConfigContainer>> SERVER_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
 
 	@Internal
 	public static void initialize() {
