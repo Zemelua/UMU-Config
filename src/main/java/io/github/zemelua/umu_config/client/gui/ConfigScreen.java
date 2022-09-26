@@ -42,7 +42,6 @@ public class ConfigScreen extends Screen {
 			this.valueListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			if (this.client != null) {
 				if (this.client.world == null) {
-					UMUConfig.LOGGER.info("ser");
 				} else {
 					PacketByteBuf packet = PacketByteBufs.create();
 					NbtCompound values = new NbtCompound();
@@ -64,12 +63,10 @@ public class ConfigScreen extends Screen {
 				-> MinecraftClient.getInstance().setScreen(this.parent));
 		this.applyButton = new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
 
-			UMUConfig.LOGGER.info("test");
 			this.valueListWidget.configEntries.forEach(AbstractConfigEntry::applyValue);
 			UMUConfig.LOGGER.info(this.client == null);
 			if (this.client != null) {
 				if (this.client.world == null) {
-					UMUConfig.LOGGER.info("ser");
 				} else {
 					PacketByteBuf packet = PacketByteBufs.create();
 					NbtCompound values = new NbtCompound();

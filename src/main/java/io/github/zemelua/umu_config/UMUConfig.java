@@ -1,8 +1,8 @@
 package io.github.zemelua.umu_config;
 
 import io.github.zemelua.umu_config.config.ConfigManager;
-import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.IConfigProvider;
+import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
@@ -14,7 +14,6 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UMUConfig implements ModInitializer, IConfigProvider {
@@ -32,11 +31,8 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 			new BooleanConfigValue("test_basicBool", false),
 			INT_CONFIG_VALUE_EXAMPLE);
 
-	private static final List<IConfigContainer> CONFIGS = new ArrayList<>();
-
 	@Override
 	public void onInitialize() {
-
 		NetworkHandler.initialize();
 		ConfigManager.initialize();
 	}

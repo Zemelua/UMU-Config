@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import io.github.zemelua.umu_config.ConfigHandler;
-import io.github.zemelua.umu_config.client.gui.ConfigScreen;
+import io.github.zemelua.umu_config.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.fabricmc.api.Environment;
@@ -13,7 +13,9 @@ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,8 @@ import static net.fabricmc.api.EnvType.*;
 
 public final class ConfigManager {
 	@NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
+	@Environment(CLIENT) @NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CLIENT_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
+	@Environment(SERVER) @NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> SERVER_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
 
 	@Internal
 	public static void initialize() {
@@ -39,19 +43,49 @@ public final class ConfigManager {
 	}
 
 	@Environment(CLIENT)
+	@Internal
+	public static void initializeClient() {
+		List<EntrypointContainer<IConfigProvider>> modConfigs = FabricLoader.getInstance().getEntrypointContainers("umu-config-client", IConfigProvider.class);
+		CLIENT_CONFIGS = modConfigs.stream().map(entrypoint -> {
+			String modID = entrypoint.getProvider().getMetadata().getId();
+			IConfigProvider modConfig = entrypoint.getEntrypoint();
+
+			return Pair.of(modID, ImmutableList.copyOf(modConfig.getConfigs()));
+		}).collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond));
+
+		streamClient().forEach(ConfigHandler::loadTo);
+		streamClient().forEach(ConfigHandler::saveFrom);
+	}
+
+	@Environment(SERVER)
+	@Internal
+	@SuppressWarnings("unused")
+	public static void initializeServer() {
+	}
+
+	@Environment(CLIENT)
 	public static Optional<Screen> openConfigScreen(Screen parent, String modID) {
-		List<IConfigContainer> config = byModID(modID);
+		List<IConfigContainer> config = Stream.concat(byModID(modID).stream(), byModIDClient(modID).stream()).toList();
 		if (config.isEmpty()) return Optional.empty();
 
 		if (config.size() == 1) {
-			return Optional.of(new ConfigScreen(parent, config.get(0)));
+			return Optional.of(new ClientConfigScreen(parent, config.get(0)));
 		} else {
 			return Optional.of(new ConfigsScreen(parent, modID));
 		}
 	}
 
 	public static List<IConfigContainer> byModID(String modID) {
-		return CONFIGS.get(modID);
+		@Nullable List<IConfigContainer> configs = CONFIGS.get(modID);
+
+		return configs == null ? List.of() : new ArrayList<>(configs);
+	}
+
+	@Environment(CLIENT)
+	public static List<IConfigContainer> byModIDClient(String modID) {
+		@Nullable List<IConfigContainer> configs = CLIENT_CONFIGS.get(modID);
+
+		return configs == null ? List.of() : new ArrayList<>(configs);
 	}
 
 	public static Optional<IConfigContainer> byName(String name) {
@@ -62,6 +96,12 @@ public final class ConfigManager {
 
 	public static Stream<IConfigContainer> stream() {
 		return CONFIGS.values().stream()
+				.flatMap(Collection::stream);
+	}
+
+	@Environment(CLIENT)
+	public static Stream<IConfigContainer> streamClient() {
+		return CLIENT_CONFIGS.values().stream()
 				.flatMap(Collection::stream);
 	}
 }

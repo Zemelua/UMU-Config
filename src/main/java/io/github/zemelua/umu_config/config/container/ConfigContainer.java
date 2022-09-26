@@ -38,7 +38,7 @@ public class ConfigContainer implements IConfigContainer {
 	public void saveTo(JsonObject fileJson) {
 		this.values.forEach(value -> value.saveTo(fileJson));
 
-		UMUConfig.LOGGER.info("Saved config from file: " + this.name);
+		UMUConfig.LOGGER.info("Saved config to file: " + this.name);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class ConfigContainer implements IConfigContainer {
 	public void saveTo(NbtCompound sendNBT) {
 		this.values.forEach(value -> value.saveTo(sendNBT));
 
-		UMUConfig.LOGGER.info("Saved config from packet: " + this.name);
+		UMUConfig.LOGGER.info("Saved config to packet: " + this.name);
 	}
 
 	@Override

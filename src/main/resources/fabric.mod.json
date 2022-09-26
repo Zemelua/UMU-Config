@@ -13,7 +13,8 @@
 		"main": [ "io.github.zemelua.umu_config.UMUConfig" ],
 		"client": [ "io.github.zemelua.umu_config.client.UMUConfigClient" ],
 		"modmenu": [ "io.github.zemelua.umu_config.client.ModMenuImpl" ],
-		"umu-config": [ "io.github.zemelua.umu_config.UMUConfig" ]
+		"umu-config": [ "io.github.zemelua.umu_config.UMUConfig" ],
+		"umu-config-client": [ "io.github.zemelua.umu_config.client.UMUConfigClient" ]
 	},
 	"mixins": [
 		"umu_config.mixins.json"
