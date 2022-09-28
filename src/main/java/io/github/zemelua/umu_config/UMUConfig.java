@@ -21,16 +21,16 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 	public static final String MOD_ID = "umu_config";
 	public static final Logger LOGGER = LogManager.getLogger("UMU-Config");
 
-	public static final IConfigValue<Integer> INT_CONFIG_VALUE_EXAMPLE = new IntegerConfigValue(
-			"int_config_value_example",
+	public static final IConfigValue<Integer> EXAMPLE_VALUE_INT = new IntegerConfigValue(
+			UMUConfig.identifier("example_int"),
 			0,
 			10,
 			0,
 			i -> Text.literal(String.valueOf(i)));
 
-	public static final IConfigContainer TEST_BASIC_CONFIG = new ConfigContainer("test_basic",
-			new BooleanConfigValue("test_basicBool", false),
-			INT_CONFIG_VALUE_EXAMPLE);
+	public static final IConfigContainer EXAMPLE_CONFIG = new ConfigContainer(UMUConfig.identifier("example"),
+			new BooleanConfigValue(UMUConfig.identifier("example_bool"), false),
+			EXAMPLE_VALUE_INT);
 
 	@Override
 	public void onInitialize() {
@@ -47,6 +47,6 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 
 	@Override
 	public List<IConfigContainer> getConfigs() {
-		return List.of(TEST_BASIC_CONFIG);
+		return List.of(EXAMPLE_CONFIG);
 	}
 }

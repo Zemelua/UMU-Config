@@ -7,35 +7,36 @@ import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import static net.fabricmc.api.EnvType.*;
 
 public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements IBooleanConfigValue {
-	public BooleanConfigValue(String name, Boolean defaultValue) {
-		super(name, defaultValue);
+	public BooleanConfigValue(Identifier ID, Boolean defaultValue) {
+		super(ID, defaultValue);
 	}
 
 	@Override
 	public void saveTo(JsonObject fileJson) {
-		fileJson.addProperty(this.name, this.value);
+		fileJson.addProperty(this.ID.getPath(), this.value);
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
-		if (fileJson.has(this.name)) {
-			this.value = fileJson.get(this.name).getAsBoolean();
+		if (fileJson.has(this.ID.getPath())) {
+			this.value = fileJson.get(this.ID.getPath()).getAsBoolean();
 		}
 	}
 
 	@Override
 	public void saveTo(NbtCompound sendNBT) {
-		sendNBT.putBoolean(this.name, this.value);
+		sendNBT.putBoolean(this.ID.getPath(), this.value);
 	}
 
 	@Override
 	public void loadFrom(NbtCompound receivedNBT) {
-		if (receivedNBT.contains(this.name)) {
-			this.value = receivedNBT.getBoolean(this.name);
+		if (receivedNBT.contains(this.ID.getPath())) {
+			this.value = receivedNBT.getBoolean(this.ID.getPath());
 		}
 	}
 

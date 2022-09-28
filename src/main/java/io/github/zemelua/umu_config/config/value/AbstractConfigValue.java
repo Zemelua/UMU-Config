@@ -1,14 +1,15 @@
 package io.github.zemelua.umu_config.config.value;
 
 import io.github.zemelua.umu_config.config.IConfigValue;
+import net.minecraft.util.Identifier;
 
 public abstract class AbstractConfigValue<T> implements IConfigValue<T> {
-	protected final String name;
+	protected final Identifier ID;
 	protected T value;
 	protected final T defaultValue;
 
-	protected AbstractConfigValue(String name, T defaultValue) {
-		this.name = name;
+	protected AbstractConfigValue(Identifier ID, T defaultValue) {
+		this.ID = ID;
 		this.defaultValue = defaultValue;
 
 		this.value = this.defaultValue;
@@ -30,7 +31,7 @@ public abstract class AbstractConfigValue<T> implements IConfigValue<T> {
 	}
 
 	@Override
-	public String getName() {
-		return this.name;
+	public Identifier getID() {
+		return this.ID;
 	}
 }

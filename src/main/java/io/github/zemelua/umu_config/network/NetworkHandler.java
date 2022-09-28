@@ -15,16 +15,16 @@ public final class NetworkHandler {
 
 	public static void initialize() {
 		ServerPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_SINGLEPLAY_CONFIG, (server, player, handler, packet, sender) -> {
-			final String configName = packet.readString();
+			final Identifier configID = packet.readIdentifier();
 			final NbtCompound values = packet.readNbt();
 
-			server.execute(() -> PacketHandlers.syncSingleplayConfig(configName, values));
+			server.execute(() -> PacketHandlers.syncSingleplayConfig(configID, values));
 		});
 		ServerPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_MULTIPLAY_CONFIG, (server, player, handler, packet, sender) -> {
-			final String configName = packet.readString();
+			final Identifier configID = packet.readIdentifier();
 			final NbtCompound values = packet.readNbt();
 
-			server.execute(() -> PacketHandlers.syncMultiplayConfig(server, configName, values));
+			server.execute(() -> PacketHandlers.syncMultiplayConfig(server, configID, values));
 		});
 	}
 
@@ -33,10 +33,10 @@ public final class NetworkHandler {
 	@Environment(CLIENT)
 	public static void initializeClient() {
 		ClientPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_CONFIG_TO_CLIENT, (client, handler, packet, sender) -> {
-			final String configName = packet.readString();
+			final Identifier configID = packet.readIdentifier();
 			final NbtCompound values = packet.readNbt();
 
-			client.execute(() -> PacketHandlers.syncConfigOnClient(configName, values));
+			client.execute(() -> PacketHandlers.syncConfigOnClient(configID, values));
 		});
 	}
 

@@ -115,7 +115,7 @@ public class ConfigsScreen extends Screen {
 		@Environment(CLIENT)
 		protected final class CommonConfigEntry extends ConfigEntry {
 			private CommonConfigEntry(IConfigContainer config) {
-				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, Text.literal(config.getName()), button
+				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, config.getName(), button
 						-> MinecraftClient.getInstance().setScreen(new CommonConfigScreen(ConfigsScreen.this, config))));
 			}
 		}
@@ -123,7 +123,7 @@ public class ConfigsScreen extends Screen {
 		@Environment(CLIENT)
 		protected final class ClientConfigEntry extends ConfigEntry {
 			private ClientConfigEntry(IConfigContainer config) {
-				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, Text.literal(config.getName()), button
+				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, config.getName(), button
 						-> MinecraftClient.getInstance().setScreen(new ClientConfigScreen(ConfigsScreen.this, config))));
 			}
 		}

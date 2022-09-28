@@ -65,6 +65,10 @@ public abstract class AbstractConfigEntry<T, V extends IConfigValue<T>> extends 
 		this.canEdit = value;
 	}
 
+	public Text getTooltip() {
+		return this.config.getTooltip();
+	}
+
 	@Override
 	public List<? extends Element> children() {
 		return ImmutableList.of(this.resetButton);

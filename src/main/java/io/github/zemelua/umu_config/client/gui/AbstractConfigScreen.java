@@ -4,12 +4,14 @@ import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +27,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 	@NotNull protected ClickableWidget applyButton;
 
 	public AbstractConfigScreen(Screen parent, IConfigContainer config) {
-		super(Text.translatable("umu_config." + config.getName() + ".title").append(Text.literal(" (Read Only)")));
+		super(config.getName().copy().append(Text.literal(" (Read Only)")));
 		this.parent = parent;
 		this.config = config;
 
@@ -54,20 +56,20 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 	}
 
-	private ValueListWidget createValueListWidget() {
+	protected ValueListWidget createValueListWidget() {
 		return this.new ValueListWidget();
 	}
 
-	private ClickableWidget createCancelButton() {
+	protected ClickableWidget createCancelButton() {
 		return new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(parent)
 		);
 	}
 
-	private ClickableWidget createApplyButton() {
+	protected ClickableWidget createApplyButton() {
 		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
 			this.applyValues(button);
-			MinecraftClient.getInstance().setScreen(this.parent);;
+			MinecraftClient.getInstance().setScreen(this.parent);
 		});
 	}
 
@@ -90,7 +92,11 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 			super.render(matrices, mouseX, mouseY, delta);
 
-			AbstractConfigScreen.this.renderTooltip(matrices, Text.literal("tooltip test"), mouseX, mouseY);
+			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+			if (this.getHoveredEntry() != null) {
+				List<OrderedText> tooltip = textRenderer.wrapLines(this.getHoveredEntry().getTooltip(), 200);
+				AbstractConfigScreen.this.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
+			}
 		}
 
 		protected List<AbstractConfigEntry<?, ?>> getConfigEntries() {

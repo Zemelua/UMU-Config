@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,7 +67,7 @@ public final class ConfigManager {
 		PacketByteBuf packet = PacketByteBufs.create();
 		NbtCompound values = new NbtCompound();
 		config.saveTo(values);
-		packet.writeString(config.getName());
+		packet.writeIdentifier(config.getID());
 		packet.writeNbt(values);
 
 		if (MinecraftClient.getInstance().isIntegratedServerRunning() && !Objects.requireNonNull(MinecraftClient.getInstance().getServer()).isRemote()) {
@@ -80,7 +81,7 @@ public final class ConfigManager {
 		PacketByteBuf packet = PacketByteBufs.create();
 		NbtCompound values = new NbtCompound();
 		config.saveTo(values);
-		packet.writeString(config.getName());
+		packet.writeIdentifier(config.getID());
 		packet.writeNbt(values);
 
 		ServerPlayNetworking.send(player, CHANNEL_SYNC_CONFIG_TO_CLIENT, packet);
@@ -117,9 +118,9 @@ public final class ConfigManager {
 		return configs == null ? List.of() : new ArrayList<>(configs);
 	}
 
-	public static Optional<IConfigContainer> byName(String name) {
+	public static Optional<IConfigContainer> byName(Identifier ID) {
 		return stream()
-				.filter(config -> config.getName().equals(name))
+				.filter(config -> config.getID().equals(ID))
 				.findFirst();
 	}
 

@@ -16,6 +16,6 @@ public abstract class ReloadCommandMixin {
 	@Inject(method = "tryReloadDataPacks",
 			at = @At(value = "RETURN"))
 	private static void reloadConfigs(Collection<String> dataPacks, ServerCommandSource source, CallbackInfo callback) {
-		ConfigHandler.loadTo(UMUConfig.TEST_BASIC_CONFIG);
+		ConfigHandler.loadTo(UMUConfig.EXAMPLE_CONFIG);
 	}
 }

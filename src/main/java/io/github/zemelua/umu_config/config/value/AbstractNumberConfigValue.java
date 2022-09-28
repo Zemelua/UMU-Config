@@ -5,6 +5,7 @@ import io.github.zemelua.umu_config.client.gui.entry.NumberConfigEntry;
 import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
@@ -15,8 +16,8 @@ public abstract class AbstractNumberConfigValue<T extends Number> extends Abstra
 	protected final T minValue;
 	protected final Function<T, Text> textGenerator;
 
-	protected AbstractNumberConfigValue(String name, T defaultValue, T maxValue, T minValue, Function<T, Text> textGenerator) {
-		super(name, defaultValue);
+	protected AbstractNumberConfigValue(Identifier ID, T defaultValue, T maxValue, T minValue, Function<T, Text> textGenerator) {
+		super(ID, defaultValue);
 
 		this.maxValue = maxValue;
 		this.minValue = minValue;

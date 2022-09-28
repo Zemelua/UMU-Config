@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.client;
 
 import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigProvider;
 import io.github.zemelua.umu_config.config.IConfigValue;
@@ -18,10 +19,11 @@ import static net.fabricmc.api.EnvType.*;
 
 @Environment(CLIENT)
 public class UMUConfigClient implements ClientModInitializer, IConfigProvider {
-	public static final IConfigValue<Boolean> EXAMPLE0 = new BooleanConfigValue("example0", true);
+	public static final IConfigValue<Boolean> EXAMPLE_VALUE_BOOL = new BooleanConfigValue(UMUConfig.identifier("example_client_bool"), true);
 
-	private static final IConfigContainer EXAMPLE_CLIENT_CONFIG = new ConfigContainer("example_client_config",
-			EXAMPLE0
+	private static final IConfigContainer EXAMPLE_CONFIG_CLIENT = new ConfigContainer(
+			UMUConfig.identifier("example_client"),
+			EXAMPLE_VALUE_BOOL
 	);
 
 	@Override
@@ -35,6 +37,6 @@ public class UMUConfigClient implements ClientModInitializer, IConfigProvider {
 
 	@Override
 	public List<IConfigContainer> getConfigs() {
-		return List.of(EXAMPLE_CLIENT_CONFIG);
+		return List.of(EXAMPLE_CONFIG_CLIENT);
 	}
 }
