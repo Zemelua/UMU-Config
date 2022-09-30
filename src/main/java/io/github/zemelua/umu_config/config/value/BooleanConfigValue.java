@@ -43,8 +43,8 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements 
 
 	@Environment(CLIENT)
 	@Override
-	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent) {
-		return new BooleanConfigEntry<>(this, indent);
+	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
+		return new BooleanConfigEntry<>(this, indent, readOnly);
 	}
 
 	@Environment(CLIENT)

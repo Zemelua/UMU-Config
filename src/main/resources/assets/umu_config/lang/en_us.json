@@ -1,6 +1,8 @@
 {
 	"gui.send_to_server": "Send to Server",
-	"gui.config.apply_multiplay.tooltip": "Apply Multiplay Tooltip.",
+	"gui.read_only": "Read Only",
+	"gui.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
+	"gui.have_not_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu.",
 	"config.umu_config.example": "Example Config",
 	"config.umu_config.example_client": "Example Client Config",
 	"config.category.umu_config.example": "Example Bool Value",

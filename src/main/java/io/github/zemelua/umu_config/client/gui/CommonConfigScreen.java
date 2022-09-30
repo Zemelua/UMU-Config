@@ -18,19 +18,11 @@ import java.util.List;
 import java.util.Objects;
 
 public final class CommonConfigScreen extends AbstractConfigScreen {
-	private static final Text APPLY_MULTIPLAY_TOOLTIP = Text.translatable("gui.config.apply_multiplay.tooltip").formatted(Formatting.YELLOW);
+	private static final Text APPLY_MULTIPLAY_TOOLTIP = Text.translatable("gui.apply_multiplay").formatted(Formatting.YELLOW);
+	private static final Text HAVE_NOT_PERMISSION_TOOLTIP = Text.translatable("gui.have_not_permission").formatted(Formatting.YELLOW);
 
 	public CommonConfigScreen(Screen parent, IConfigContainer config) {
 		super(parent, config);
-
-		this.applyButton.active = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
-	}
-
-	@Override
-	protected void init() {
-		super.init();
-
-		this.applyButton.active = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
 	}
 
 	@Override
@@ -38,17 +30,26 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 		super.render(matrices, mouseX, mouseY, delta);
 
 		if (ModUtils.isInMultiplayServer() && this.applyButton.isHovered()) {
-			List<OrderedText> tooltip = this.textRenderer.wrapLines(APPLY_MULTIPLAY_TOOLTIP, 200);
+			List<OrderedText> tooltip;
+			if (this.readOnly) {
+				tooltip = this.textRenderer.wrapLines(HAVE_NOT_PERMISSION_TOOLTIP, 200);
+			} else {
+				tooltip = this.textRenderer.wrapLines(APPLY_MULTIPLAY_TOOLTIP, 200);
+			}
 			this.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
 		}
 	}
 
 	@Override
 	protected ClickableWidget createApplyButton() {
-		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.send_to_server"), button -> {
+		Text message = this.readOnly ? Text.translatable("gui.read_only") : Text.translatable("gui.send_to_server");
+
+		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, message, button -> {
 			this.applyValues(button);
 			MinecraftClient.getInstance().setScreen(this.parent);
-		});
+		}) {{
+			this.active = !CommonConfigScreen.this.readOnly;
+		}};
 	}
 
 	@Override

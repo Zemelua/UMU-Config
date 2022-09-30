@@ -10,8 +10,8 @@ import net.minecraft.util.math.MathHelper;
 public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INumberConfigValue<T>> extends AbstractConfigValueEntry<T, V> {
 	private final SliderEditor editor = this.new SliderEditor(20);
 
-	public NumberConfigEntry(V config, int indent) {
-		super(config, indent);
+	public NumberConfigEntry(V config, int indent, boolean readOnly) {
+		super(config, indent, readOnly);
 
 		this.editor.setValue(this.modifyingValue);
 		this.children.add(this.editor);

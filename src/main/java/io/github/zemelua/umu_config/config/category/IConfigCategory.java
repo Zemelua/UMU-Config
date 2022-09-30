@@ -23,7 +23,7 @@ public interface IConfigCategory extends IConfigElement {
 
 	@Environment(CLIENT)
 	@Override
-	default AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent) {
-		return new ConfigCategoryEntry(parent, this, indent);
+	default AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
+		return new ConfigCategoryEntry(parent, this, indent, readOnly);
 	}
 }

@@ -1,0 +1,15 @@
+{
+	"gui.send_to_server": "サーバーに送信する",
+	"gui.read_only": "編集不可",
+	"gui.apply_multiplay": "このボタンを押すと、編集したコンフィグがサーバーに送信されます。新しい編集内容がサーバーのゲームロジックに反映され、各プレイヤーにも送信されます。これについて不安がある場合はサーバーの管理者に問い合わせてください。",
+	"gui.have_not_permission": "マルチプレイサーバーのコンフィグが表示されています。あなたにはこれを編集する権限がありません。編集したい場合は、サーバーの管理者に問い合わせてください。あなたの環境のコンフィグを編集したい場合、ワールドからログアウトし、メインメニューから編集できます。",
+	"config.umu_config.example": "コンフィグ（サンプル）",
+	"config.umu_config.example_client": "クライアントコンフィグ（サンプル）",
+	"config.category.umu_config.example": "カテゴリ（サンプル）",
+	"config.value.umu_config.example_bool": "真偽値（サンプル）",
+	"config.value.umu_config.example_int": "数値（サンプル）",
+	"config.value.umu_config.example_categorized_bool": "カテゴリ内の真偽値（サンプル）",
+	"config.value.umu_config.example_client_bool": "クライアントの真偽値（サンプル）",
+	"config.value.tooltip.umu_config.example_bool": "真偽値（サンプル）のツールチップ。これを編集してもゲームに変更はありません。",
+	"config.value.tooltip.umu_config.example_int": "数値（サンプル）のツールチップ。これを編集してもゲームに変更はありません。"
+}

@@ -20,16 +20,20 @@ import java.util.List;
 public abstract sealed class AbstractConfigScreen extends Screen permits CommonConfigScreen, ClientConfigScreen {
 	protected final Screen parent;
 	protected final IConfigContainer config;
+	protected final boolean readOnly;
 
 	@NotNull protected AbstractConfigScreen.ValueListWidget valueListWidget;
 	@NotNull protected ClickableWidget cancelButton;
 	@NotNull protected ClickableWidget applyButton;
 
 	public AbstractConfigScreen(Screen parent, IConfigContainer config) {
-		super(config.getName().copy().append(Text.literal(" (Read Only)")));
+		super(MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().player.hasPermissionLevel(4)
+				? config.getName().copy().append(" (").append(Text.translatable("gui.read_only")).append(")")
+				: config.getName());
 		this.parent = parent;
 		this.config = config;
 
+		this.readOnly = MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().player.hasPermissionLevel(4);
 		this.valueListWidget = this.createValueListWidget();
 		this.cancelButton = this.createCancelButton();
 		this.applyButton = this.createApplyButton();
@@ -61,7 +65,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 
 	protected ClickableWidget createCancelButton() {
 		return new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
-				-> MinecraftClient.getInstance().setScreen(parent)
+				-> MinecraftClient.getInstance().setScreen(this.parent)
 		);
 	}
 
@@ -81,7 +85,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, AbstractConfigScreen.this.height - 32, 24);
 
 			AbstractConfigScreen.this.config.getElements().forEach(value -> {
-				AbstractConfigEntry entry = value.createEntry(this, 0);
+				AbstractConfigEntry entry = value.createEntry(this, 0, AbstractConfigScreen.this.readOnly);
 				this.addEntry(entry);
 				this.configEntries.add(entry);
 			});

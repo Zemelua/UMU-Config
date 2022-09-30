@@ -26,8 +26,8 @@ public abstract class AbstractNumberConfigValue<T extends Number> extends Abstra
 
 	@Environment(CLIENT)
 	@Override
-	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent) {
-		return new NumberConfigEntry<>(this, indent);
+	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
+		return new NumberConfigEntry<>(this, indent, readOnly);
 	}
 
 	@Environment(CLIENT)

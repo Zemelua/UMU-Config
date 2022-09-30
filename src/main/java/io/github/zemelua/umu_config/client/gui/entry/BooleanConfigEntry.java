@@ -9,8 +9,8 @@ import net.minecraft.text.Text;
 public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfigValue> extends AbstractConfigValueEntry<Boolean, V> {
 	private final ButtonWidget editor;
 
-	public BooleanConfigEntry(V config, int indent) {
-		super(config, indent);
+	public BooleanConfigEntry(V config, int indent, boolean readOnly) {
+		super(config, indent, readOnly);
 
 		this.editor = new ButtonWidget(0, 0, 0, 20, Text.empty(), (button) -> this.modifyingValue = !this.modifyingValue);
 		this.children.add(this.editor);

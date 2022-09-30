@@ -27,13 +27,13 @@ public class ConfigCategoryEntry extends AbstractConfigEntry {
 
 	private boolean isFolded;
 
-	public ConfigCategoryEntry(AbstractConfigScreen.ValueListWidget parent, IConfigCategory category, int indent) {
+	public ConfigCategoryEntry(AbstractConfigScreen.ValueListWidget parent, IConfigCategory category, int indent, boolean readOnly) {
 		super(indent);
 
 		this.category = category;
 		this.parent = parent;
 		this.contents = this.category.getElements().stream()
-				.map(value -> value.createEntry(parent, this.indent + 1))
+				.map(value -> value.createEntry(parent, this.indent + 1, readOnly))
 				.collect(ImmutableList.toImmutableList());
 		this.isFolded = true;
 	}

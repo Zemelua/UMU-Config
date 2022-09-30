@@ -23,5 +23,5 @@ public interface IConfigElement {
 
 	@Environment(CLIENT) Text getName();
 
-	@Environment(CLIENT) AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent);
+	@Environment(CLIENT) AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly);
 }
