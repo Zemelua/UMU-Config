@@ -6,6 +6,7 @@ import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.client.gui.entry.BooleanConfigEntry;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -49,6 +50,6 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements 
 	@Environment(CLIENT)
 	@Override
 	public Text getValueText(Boolean value) {
-		return null;
+		return value ? ScreenTexts.ON : ScreenTexts.OFF;
 	}
 }

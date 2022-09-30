@@ -1,24 +1,21 @@
 package io.github.zemelua.umu_config.client.gui.entry;
 
-import com.google.common.collect.ImmutableList;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.INumberConfigValue;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.List;
-
 public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INumberConfigValue<T>> extends AbstractConfigValueEntry<T, V> {
-	private final SliderEditor editor = new SliderEditor(20);
+	private final SliderEditor editor = this.new SliderEditor(20);
 
 	public NumberConfigEntry(V config, int indent) {
 		super(config, indent);
 
 		this.editor.setValue(this.modifyingValue);
+		this.children.add(this.editor);
+		this.selectableChildren.add(this.editor);
 		this.clickableWidgets.add(this.editor);
 	}
 
@@ -30,32 +27,6 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 		this.editor.applyValue();
 		this.editor.updateMessage();
 		this.editor.render(matrices, mouseX, mouseY, tickDelta);
-	}
-
-	@Override
-	public List<? extends Element> children() {
-		return ImmutableList.<Element>builder()
-				.addAll(super.children())
-				.add(this.editor)
-				.build();
-	}
-
-	@Override
-	public List<? extends Selectable> selectableChildren() {
-		return ImmutableList.<Selectable>builder()
-				.addAll(super.selectableChildren())
-				.add(this.editor)
-				.build();
-	}
-
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		return super.mouseClicked(mouseX, mouseY, button) || this.editor.mouseClicked(mouseX, mouseY, button);
-	}
-
-	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		return super.mouseReleased(mouseX, mouseY, button) || this.editor.mouseReleased(mouseX, mouseY, button);
 	}
 
 	@Override
