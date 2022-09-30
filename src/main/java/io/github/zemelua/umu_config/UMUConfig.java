@@ -6,6 +6,7 @@ import io.github.zemelua.umu_config.config.category.ConfigCategory;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
+import io.github.zemelua.umu_config.config.value.FloatConfigValue;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
 import io.github.zemelua.umu_config.network.NetworkHandler;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Locale;
 
 public class UMUConfig implements ModInitializer, IConfigProvider {
 	public static final String MOD_ID = "umu_config";
@@ -28,6 +30,10 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 			10,
 			0,
 			i -> Text.literal(String.valueOf(i)));
+	public static final IConfigValue<Float> EXAMPLE_VALUE_FLOAT = new FloatConfigValue(
+			UMUConfig.identifier("example_float"),
+			5.0F, 25.0F, 2.0F, value -> Text.literal(String.format(Locale.ROOT, "%.1f", value))
+	);
 	public static final IConfigValue<Boolean> EXAMPLE_CATEGORIZED_VALUE_BOOL = new BooleanConfigValue(
 			UMUConfig.identifier("example_categorized_bool"),
 			false
@@ -36,6 +42,7 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 	public static final IConfigContainer EXAMPLE_CONFIG = new ConfigContainer(UMUConfig.identifier("example"),
 			new BooleanConfigValue(UMUConfig.identifier("example_bool"), false),
 			EXAMPLE_VALUE_INT,
+			EXAMPLE_VALUE_FLOAT,
 			new ConfigCategory(
 					UMUConfig.identifier("example"),
 					EXAMPLE_CATEGORIZED_VALUE_BOOL

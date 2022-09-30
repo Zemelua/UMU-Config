@@ -51,7 +51,7 @@ public abstract class AbstractConfigValueEntry<T, V extends IConfigValue<T>> ext
 
 		this.resetButton.x = x + entryWidth - 60;
 		this.resetButton.y = y + entryHeight / 2 - this.resetButton.getHeight() / 2;
-		this.resetButton.active = this.canEdit && this.modifyingValue != this.config.getDefaultValue();
+		this.resetButton.active = this.canEdit && !this.modifyingValue.equals(this.config.getDefaultValue());
 		this.resetButton.render(matrices, mouseX, mouseY, tickDelta);
 
 		this.renderEditor(matrices, x, y, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);

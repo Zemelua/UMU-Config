@@ -8,8 +8,8 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.function.Function;
 
-public class IntegerConfigValue extends AbstractNumberConfigValue<Integer> {
-	public IntegerConfigValue(Identifier ID, Integer defaultValue, Integer maxValue, Integer minValue, Function<Integer, Text> textGenerator) {
+public class FloatConfigValue extends AbstractNumberConfigValue<Float> {
+	public FloatConfigValue(Identifier ID, Float defaultValue, Float maxValue, Float minValue, Function<Float, Text> textGenerator) {
 		super(ID, defaultValue, maxValue, minValue, textGenerator);
 	}
 
@@ -21,29 +21,29 @@ public class IntegerConfigValue extends AbstractNumberConfigValue<Integer> {
 	@Override
 	public void loadFrom(JsonObject fileJson) {
 		if (fileJson.has(this.ID.getPath())) {
-			this.value = fileJson.get(this.ID.getPath()).getAsInt();
+			this.value = fileJson.get(this.ID.getPath()).getAsFloat();
 		}
 	}
 
 	@Override
 	public void saveTo(NbtCompound sendNBT) {
-		sendNBT.putInt(this.ID.getPath(), this.value);
+		sendNBT.putFloat(this.ID.getPath(), this.value);
 	}
 
 	@Override
 	public void loadFrom(NbtCompound receivedNBT) {
 		if (receivedNBT.contains(this.ID.getPath())) {
-			this.value = receivedNBT.getInt(this.ID.getPath());
+			this.value = receivedNBT.getFloat(this.ID.getPath());
 		}
 	}
 
 	@Override
-	public Integer convert(double value) {
-		return MathHelper.floor(MathHelper.map(value, 0.0D, 1.0D, this.minValue.doubleValue(), this.maxValue.doubleValue()));
+	public Float convert(double value) {
+		return (float) MathHelper.map(value, 0.0D, 1.0D, this.minValue.doubleValue(), this.maxValue.doubleValue());
 	}
 
 	@Override
-	public double convert(Integer value) {
+	public double convert(Float value) {
 		return MathHelper.map(value, this.minValue.doubleValue(), this.maxValue.doubleValue(), 0.0D, 1.0D);
 	}
 }
