@@ -3,7 +3,6 @@ package io.github.zemelua.umu_config.config;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
-import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
@@ -44,8 +43,8 @@ public final class ConfigManager {
 			return Pair.of(modID, ImmutableList.copyOf(modConfig.getConfigs()));
 		}).collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond));
 
-		stream().forEach(ConfigHandler::loadTo);
-		stream().forEach(ConfigHandler::saveFrom);
+		stream().forEach(ConfigFileManager::loadTo);
+		stream().forEach(ConfigFileManager::saveFrom);
 	}
 
 	@Environment(CLIENT)
@@ -59,8 +58,8 @@ public final class ConfigManager {
 			return Pair.of(modID, ImmutableList.copyOf(modConfig.getConfigs()));
 		}).collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond));
 
-		streamClient().forEach(ConfigHandler::loadTo);
-		streamClient().forEach(ConfigHandler::saveFrom);
+		streamClient().forEach(ConfigFileManager::loadTo);
+		streamClient().forEach(ConfigFileManager::saveFrom);
 	}
 
 	public static void sendToServer(IConfigContainer config) {

@@ -1,6 +1,7 @@
-package io.github.zemelua.umu_config;
+package io.github.zemelua.umu_config.config;
 
 import com.google.gson.*;
+import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.SerializationException;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class ConfigHandler {
+public class ConfigFileManager {
 	public static final Gson GSON = new GsonBuilder()
 			.setPrettyPrinting()
 			.create();

@@ -2,7 +2,7 @@ package io.github.zemelua.umu_config.config.container;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigElement;
 import net.minecraft.nbt.NbtCompound;
@@ -32,7 +32,7 @@ public class ConfigContainer implements IConfigContainer {
 
 	@Override
 	public Path getPath() {
-		return ConfigHandler.getConfigPath().resolve(this.ID.getPath() + ".json");
+		return ConfigFileManager.getConfigPath().resolve(this.ID.getPath() + ".json");
 	}
 
 	@Override

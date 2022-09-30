@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
-import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.gui.screen.Screen;
@@ -14,6 +14,6 @@ public final class ClientConfigScreen extends AbstractConfigScreen {
 	@Override
 	protected void applyValues(ClickableWidget button) {
 		this.valueListWidget.getConfigEntries().forEach(AbstractConfigEntry::applyValue);
-		ConfigHandler.saveFrom(this.config);
+		ConfigFileManager.saveFrom(this.config);
 	}
 }

@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.client;
 
-import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigProvider;
@@ -32,7 +32,7 @@ public class UMUConfigClient implements ClientModInitializer, IConfigProvider {
 		NetworkHandler.initializeClient();
 
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ConfigManager.stream()
-				.forEach(ConfigHandler::loadTo));
+				.forEach(ConfigFileManager::loadTo));
 	}
 
 	@Override

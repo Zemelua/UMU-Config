@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.network;
 
-import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.nbt.NbtCompound;
@@ -13,14 +13,14 @@ public final class PacketHandlers {
 		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);
 
 		config.loadFrom(values);
-		ConfigHandler.saveFrom(config);
+		ConfigFileManager.saveFrom(config);
 	}
 
 	public static void syncMultiplayConfig(MinecraftServer server, Identifier ID, NbtCompound values) {
 		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);
 
 		config.loadFrom(values);
-		ConfigHandler.saveFrom(config);
+		ConfigFileManager.saveFrom(config);
 		for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
 			ConfigManager.sendToClient(player, config);
 		}

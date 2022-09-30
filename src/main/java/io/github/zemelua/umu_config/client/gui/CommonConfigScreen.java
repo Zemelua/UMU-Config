@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
-import io.github.zemelua.umu_config.ConfigHandler;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
@@ -56,7 +56,7 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 		this.valueListWidget.getConfigEntries().forEach(AbstractConfigEntry::applyValue);
 
 		if (Objects.requireNonNull(this.client).world == null) {
-			ConfigHandler.saveFrom(this.config);
+			ConfigFileManager.saveFrom(this.config);
 		} else {
 			ConfigManager.sendToServer(this.config);
 		}
