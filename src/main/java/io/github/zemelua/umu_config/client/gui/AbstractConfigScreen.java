@@ -1,7 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.config.IConfigValue;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -75,17 +74,17 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 
 	protected abstract void applyValues(ClickableWidget button);
 
-	public class ValueListWidget extends ElementListWidget<AbstractConfigEntry<?, ?>> {
-		private final List<AbstractConfigEntry<?, ?>> configEntries = new ArrayList<>();
+	public class ValueListWidget extends ElementListWidget<AbstractConfigEntry> {
+		private final List<AbstractConfigEntry> configEntries = new ArrayList<>();
 
 		public ValueListWidget() {
 			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, AbstractConfigScreen.this.height - 32, 24);
 
-			for (IConfigValue<?> value : AbstractConfigScreen.this.config.getValues()) {
-				AbstractConfigEntry<?, ?> entry = value.createEntry();
+			AbstractConfigScreen.this.config.getElements().forEach(value -> {
+				AbstractConfigEntry entry = value.createEntry(this, 0);
 				this.addEntry(entry);
 				this.configEntries.add(entry);
-			}
+			});
 		}
 
 		@Override
@@ -99,7 +98,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 			}
 		}
 
-		protected List<AbstractConfigEntry<?, ?>> getConfigEntries() {
+		protected List<AbstractConfigEntry> getConfigEntries() {
 			return this.configEntries;
 		}
 

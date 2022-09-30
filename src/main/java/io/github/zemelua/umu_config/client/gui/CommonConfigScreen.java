@@ -23,18 +23,14 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 	public CommonConfigScreen(Screen parent, IConfigContainer config) {
 		super(parent, config);
 
-		boolean canEdit = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
-		this.valueListWidget.getConfigEntries().forEach(entry -> entry.setCanEdit(canEdit));
-		this.applyButton.active = canEdit;
+		this.applyButton.active = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
 	}
 
 	@Override
 	protected void init() {
 		super.init();
 
-		boolean canEdit = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
-		this.valueListWidget.getConfigEntries().forEach(entry -> entry.setCanEdit(canEdit));
-		this.applyButton.active = canEdit;
+		this.applyButton.active = MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().player.hasPermissionLevel(2);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package io.github.zemelua.umu_config.config.value;
 
+import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.client.gui.entry.NumberConfigEntry;
-import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -26,8 +26,8 @@ public abstract class AbstractNumberConfigValue<T extends Number> extends Abstra
 
 	@Environment(CLIENT)
 	@Override
-	public AbstractConfigEntry<T, ? extends IConfigValue<T>> createEntry() {
-		return new NumberConfigEntry<>(this);
+	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent) {
+		return new NumberConfigEntry<>(this, indent);
 	}
 
 	@Environment(CLIENT)

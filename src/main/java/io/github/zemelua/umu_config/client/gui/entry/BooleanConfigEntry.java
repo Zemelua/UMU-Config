@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.client.gui.entry;
 
 import com.google.common.collect.ImmutableList;
-import io.github.zemelua.umu_config.config.IConfigValue;
+import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.IBooleanConfigValue;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
@@ -12,11 +12,11 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfigValue> extends AbstractConfigEntry<Boolean, V> {
+public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfigValue> extends AbstractConfigValueEntry<Boolean, V> {
 	private final ButtonWidget editor;
 
-	public BooleanConfigEntry(V config) {
-		super(config);
+	public BooleanConfigEntry(V config, int indent) {
+		super(config, indent);
 
 		this.editor = new ButtonWidget(0, 0, 0, 20, Text.empty(), (button) -> this.modifyingValue = !this.modifyingValue);
 		this.clickableWidgets.add(this.editor);

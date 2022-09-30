@@ -2,10 +2,11 @@ package io.github.zemelua.umu_config;
 
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigProvider;
-import io.github.zemelua.umu_config.config.IConfigValue;
+import io.github.zemelua.umu_config.config.category.ConfigCategory;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
+import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
 import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ModInitializer;
@@ -27,10 +28,19 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 			10,
 			0,
 			i -> Text.literal(String.valueOf(i)));
+	public static final IConfigValue<Boolean> EXAMPLE_CATEGORIZED_VALUE_BOOL = new BooleanConfigValue(
+			UMUConfig.identifier("example_categorized_bool"),
+			false
+	);
 
 	public static final IConfigContainer EXAMPLE_CONFIG = new ConfigContainer(UMUConfig.identifier("example"),
 			new BooleanConfigValue(UMUConfig.identifier("example_bool"), false),
-			EXAMPLE_VALUE_INT);
+			EXAMPLE_VALUE_INT,
+			new ConfigCategory(
+					UMUConfig.identifier("example"),
+					EXAMPLE_CATEGORIZED_VALUE_BOOL
+			)
+	);
 
 	@Override
 	public void onInitialize() {

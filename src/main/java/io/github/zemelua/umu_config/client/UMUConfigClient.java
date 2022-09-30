@@ -4,7 +4,7 @@ import io.github.zemelua.umu_config.ConfigHandler;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.IConfigProvider;
-import io.github.zemelua.umu_config.config.IConfigValue;
+import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.value.BooleanConfigValue;

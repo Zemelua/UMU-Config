@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.config.container;
 
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.config.IConfigValue;
+import io.github.zemelua.umu_config.config.IConfigElement;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
@@ -14,7 +14,7 @@ import java.util.List;
 import static net.fabricmc.api.EnvType.*;
 
 public interface IConfigContainer {
-	List<IConfigValue<?>> getValues();
+	List<IConfigElement> getElements();
 
 	Path getPath();
 

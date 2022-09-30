@@ -1,6 +1,5 @@
 package io.github.zemelua.umu_config.config.value;
 
-import io.github.zemelua.umu_config.config.IConfigValue;
 import net.minecraft.util.Identifier;
 
 public abstract class AbstractConfigValue<T> implements IConfigValue<T> {

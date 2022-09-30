@@ -1,3 +1,4 @@
 accessWidener v1 named
 
 accessible method net/minecraft/client/gui/widget/SliderWidget setValue (D)V
+accessible method net/minecraft/client/gui/widget/EntryListWidget replaceEntries (Ljava/util/Collection;)V

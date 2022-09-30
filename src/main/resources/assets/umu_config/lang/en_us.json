@@ -3,9 +3,11 @@
 	"gui.config.apply_multiplay.tooltip": "Apply Multiplay Tooltip.",
 	"config.umu_config.example": "Example Config",
 	"config.umu_config.example_client": "Example Client Config",
+	"config.category.umu_config.example": "Example Bool Value",
 	"config.value.umu_config.example_bool": "Example Bool Value",
 	"config.value.umu_config.example_int": "Example Int Value",
+	"config.value.umu_config.example_categorized_bool": "Example Categorized Bool Value",
 	"config.value.umu_config.example_client_bool": "Example Client Bool Value",
-	"config.value.umu_config.tooltip.example_bool": "Tooltip of the example bool config.",
-	"config.value.umu_config.tooltip.example_int": "Tooltip of the example int config."
+	"config.value.tooltip.umu_config.example_bool": "Tooltip of the example bool config.",
+	"config.value.tooltip.umu_config.example_int": "Tooltip of the example int config."
 }

@@ -1,9 +1,9 @@
 package io.github.zemelua.umu_config.config.value;
 
 import com.google.gson.JsonObject;
+import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.client.gui.entry.BooleanConfigEntry;
-import io.github.zemelua.umu_config.config.IConfigValue;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
@@ -42,8 +42,8 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements 
 
 	@Environment(CLIENT)
 	@Override
-	public AbstractConfigEntry<Boolean, ? extends IConfigValue<Boolean>> createEntry() {
-		return new BooleanConfigEntry<>(this);
+	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent) {
+		return new BooleanConfigEntry<>(this, indent);
 	}
 
 	@Environment(CLIENT)

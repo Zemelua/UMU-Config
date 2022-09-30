@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.client.gui.entry;
 
 import com.google.common.collect.ImmutableList;
-import io.github.zemelua.umu_config.config.IConfigValue;
+import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.INumberConfigValue;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
@@ -12,11 +12,11 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
-public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INumberConfigValue<T>> extends AbstractConfigEntry<T, V> {
+public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INumberConfigValue<T>> extends AbstractConfigValueEntry<T, V> {
 	private final SliderEditor editor = new SliderEditor(20);
 
-	public NumberConfigEntry(V config) {
-		super(config);
+	public NumberConfigEntry(V config, int indent) {
+		super(config, indent);
 
 		this.editor.setValue(this.modifyingValue);
 		this.clickableWidgets.add(this.editor);

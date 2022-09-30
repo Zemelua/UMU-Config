@@ -1,37 +1,23 @@
-package io.github.zemelua.umu_config.config;
+package io.github.zemelua.umu_config.config.value;
 
-import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.config.IConfigElement;
 import net.fabricmc.api.Environment;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
 import static net.fabricmc.api.EnvType.*;
 
-public interface IConfigValue<T> {
+public interface IConfigValue<T> extends IConfigElement {
 	T getValue();
 
 	void setValue(T value);
 
 	T getDefaultValue();
 
-	void saveTo(JsonObject fileJson);
-
-	void loadFrom(JsonObject fileJson);
-
-	void saveTo(NbtCompound sendNBT);
-
-	void loadFrom(NbtCompound receivedNBT);
-
-	Identifier getID();
-
-	@Environment(CLIENT) AbstractConfigEntry<T, ? extends IConfigValue<T>> createEntry();
-
 	@Environment(CLIENT) Text getValueText(T value);
 
 	@Environment(CLIENT)
+	@Override
 	default Text getName() {
 		return Text.translatable(Util.createTranslationKey("config.value", this.getID()));
 	}
