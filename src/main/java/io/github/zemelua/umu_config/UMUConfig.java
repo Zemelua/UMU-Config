@@ -5,11 +5,9 @@ import io.github.zemelua.umu_config.config.IConfigProvider;
 import io.github.zemelua.umu_config.config.category.ConfigCategory;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
-import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
-import io.github.zemelua.umu_config.config.value.FloatConfigValue;
-import io.github.zemelua.umu_config.config.value.IConfigValue;
-import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.config.value.*;
 import io.github.zemelua.umu_config.network.NetworkHandler;
+import io.github.zemelua.umu_config.util.ExampleEnum;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.text.Text;
@@ -34,6 +32,10 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 			UMUConfig.identifier("example_float"),
 			5.0F, 25.0F, 2.0F, value -> Text.literal(String.format(Locale.ROOT, "%.1f", value))
 	);
+	public static final IConfigValue<ExampleEnum> EXAMPLE_VALUE_ENUM = new EnumConfigValue<>(
+			UMUConfig.identifier("example_enum"),
+			ExampleEnum.FIRST
+	);
 	public static final IConfigValue<Boolean> EXAMPLE_CATEGORIZED_VALUE_BOOL = new BooleanConfigValue(
 			UMUConfig.identifier("example_categorized_bool"),
 			false
@@ -43,6 +45,7 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 			new BooleanConfigValue(UMUConfig.identifier("example_bool"), false),
 			EXAMPLE_VALUE_INT,
 			EXAMPLE_VALUE_FLOAT,
+			EXAMPLE_VALUE_ENUM,
 			new ConfigCategory(
 					UMUConfig.identifier("example"),
 					EXAMPLE_CATEGORIZED_VALUE_BOOL

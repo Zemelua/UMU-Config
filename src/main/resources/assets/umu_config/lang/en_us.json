@@ -8,8 +8,12 @@
 	"config.category.umu_config.example": "Example Bool Value",
 	"config.value.umu_config.example_bool": "Example Bool Value",
 	"config.value.umu_config.example_int": "Example Int Value",
+	"config.value.umu_config.example_enum": "Example Enum Value",
 	"config.value.umu_config.example_categorized_bool": "Example Categorized Bool Value",
 	"config.value.umu_config.example_client_bool": "Example Client Bool Value",
 	"config.value.tooltip.umu_config.example_bool": "Tooltip of the example bool config.",
-	"config.value.tooltip.umu_config.example_int": "Tooltip of the example int config."
+	"config.value.tooltip.umu_config.example_int": "Tooltip of the example int config.",
+	"config.enum.umu_config.example_enum.0": "Example First Enum",
+	"config.enum.umu_config.example_enum.1": "Example Second Enum",
+	"config.enum.umu_config.example_enum.2": "Example Third Enum"
 }

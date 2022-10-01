@@ -7,7 +7,7 @@ public abstract class AbstractConfigValue<T> implements IConfigValue<T> {
 	protected T value;
 	protected final T defaultValue;
 
-	protected AbstractConfigValue(Identifier ID, T defaultValue) {
+	public AbstractConfigValue(Identifier ID, T defaultValue) {
 		this.ID = ID;
 		this.defaultValue = defaultValue;
 
