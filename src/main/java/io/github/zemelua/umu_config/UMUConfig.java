@@ -44,11 +44,14 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 	public static final IConfigContainer EXAMPLE_CONFIG = new ConfigContainer(UMUConfig.identifier("example"),
 			new BooleanConfigValue(UMUConfig.identifier("example_bool"), false),
 			EXAMPLE_VALUE_INT,
-			EXAMPLE_VALUE_FLOAT,
 			EXAMPLE_VALUE_ENUM,
 			new ConfigCategory(
-					UMUConfig.identifier("example"),
-					EXAMPLE_CATEGORIZED_VALUE_BOOL
+					UMUConfig.identifier("example_category"),
+					EXAMPLE_CATEGORIZED_VALUE_BOOL,
+					new ConfigCategory(
+							UMUConfig.identifier("example_category_nested"),
+							EXAMPLE_VALUE_FLOAT
+					)
 			)
 	);
 

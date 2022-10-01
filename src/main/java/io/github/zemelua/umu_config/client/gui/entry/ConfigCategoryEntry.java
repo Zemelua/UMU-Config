@@ -62,10 +62,11 @@ public class ConfigCategoryEntry extends AbstractConfigEntry {
 				index++;
 				this.parent.children().add(index, entry);
 			}
+
+			this.isFolded = false;
 		} else {
-			this.parent.children().removeAll(this.contents);
+			this.fold();
 		}
-		this.isFolded = !this.isFolded;
 
 		return true;
 	}
@@ -73,5 +74,14 @@ public class ConfigCategoryEntry extends AbstractConfigEntry {
 	@Override
 	public void applyValue() {
 		this.contents.forEach(AbstractConfigEntry::applyValue);
+	}
+
+	public void fold() {
+		this.contents.stream()
+				.filter(entry -> entry instanceof ConfigCategoryEntry)
+				.map(entry -> (ConfigCategoryEntry) entry)
+				.forEach(ConfigCategoryEntry::fold);
+		this.parent.children().removeAll(this.contents);
+		this.isFolded = true;
 	}
 }
