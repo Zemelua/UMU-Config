@@ -18,9 +18,9 @@ import net.minecraft.util.Formatting;
 import java.util.List;
 import java.util.Objects;
 
-public final class CommonConfigScreen extends AbstractConfigScreen {
-	private static final Text APPLY_MULTIPLAY_TOOLTIP = Text.translatable("gui.apply_multiplay").formatted(Formatting.YELLOW);
-	private static final Text HAVE_NOT_PERMISSION_TOOLTIP = Text.translatable("gui.have_not_permission").formatted(Formatting.YELLOW);
+public class CommonConfigScreen extends AbstractConfigScreen {
+	private static final Text APPLY_MULTIPLAY_TOOLTIP = Text.translatable("gui.tooltip.apply_multiplay").formatted(Formatting.YELLOW);
+	private static final Text NOT_HAVE_PERMISSION_TOOLTIP = Text.translatable("gui.tooltip.not_have_permission").formatted(Formatting.YELLOW);
 
 	public CommonConfigScreen(Screen parent, IConfigContainer config) {
 		super(parent, config, ModUtils.isInMultiplayServer() && !config.canEdit(MinecraftClient.getInstance().player)
@@ -33,12 +33,9 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 		super.render(matrices, mouseX, mouseY, delta);
 
 		if (ModUtils.isInMultiplayServer() && this.applyButton.isHovered()) {
-			List<OrderedText> tooltip;
-			if (this.readOnly) {
-				tooltip = this.textRenderer.wrapLines(HAVE_NOT_PERMISSION_TOOLTIP, 200);
-			} else {
-				tooltip = this.textRenderer.wrapLines(APPLY_MULTIPLAY_TOOLTIP, 200);
-			}
+			List<OrderedText> tooltip = this.readOnly
+					? this.textRenderer.wrapLines(NOT_HAVE_PERMISSION_TOOLTIP, 200)
+					: this.textRenderer.wrapLines(APPLY_MULTIPLAY_TOOLTIP, 200);
 			this.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
 		}
 	}

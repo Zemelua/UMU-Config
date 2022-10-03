@@ -1,19 +1,6 @@
 {
 	"gui.send_to_server": "Send to Server",
 	"gui.read_only": "Read Only",
-	"gui.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
-	"gui.have_not_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu.",
-	"config.umu_config.example": "Example Config",
-	"config.umu_config.example_client": "Example Client Config",
-	"config.category.umu_config.example": "Example Bool Value",
-	"config.value.umu_config.example_bool": "Example Bool Value",
-	"config.value.umu_config.example_int": "Example Int Value",
-	"config.value.umu_config.example_enum": "Example Enum Value",
-	"config.value.umu_config.example_categorized_bool": "Example Categorized Bool Value",
-	"config.value.umu_config.example_client_bool": "Example Client Bool Value",
-	"config.value.tooltip.umu_config.example_bool": "Tooltip of the example bool config.",
-	"config.value.tooltip.umu_config.example_int": "Tooltip of the example int config.",
-	"config.enum.umu_config.example_enum.0": "Example First Enum",
-	"config.enum.umu_config.example_enum.1": "Example Second Enum",
-	"config.enum.umu_config.example_enum.2": "Example Third Enum"
+	"gui.tooltip.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
+	"gui.tooltip.not_have_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu."
 }

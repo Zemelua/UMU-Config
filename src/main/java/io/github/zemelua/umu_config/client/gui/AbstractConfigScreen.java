@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract sealed class AbstractConfigScreen extends Screen permits CommonConfigScreen, ClientConfigScreen {
+public abstract class AbstractConfigScreen extends Screen {
 	protected final Screen parent;
 	protected final IConfigContainer config;
 	protected final boolean readOnly;
