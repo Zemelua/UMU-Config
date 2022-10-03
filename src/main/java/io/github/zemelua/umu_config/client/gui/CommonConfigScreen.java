@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
+import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.ConfigManager;
@@ -42,9 +43,10 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 
 	@Override
 	protected ClickableWidget createApplyButton() {
+		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 - 155 : this.width / 2 + 5;
 		Text message = this.readOnly ? Text.translatable("gui.read_only") : Text.translatable("gui.send_to_server");
 
-		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, message, button -> {
+		return new ButtonWidget(x, this.height - 29, 150, 20, message, button -> {
 			this.applyValues(button);
 			MinecraftClient.getInstance().setScreen(this.parent);
 		}) {{

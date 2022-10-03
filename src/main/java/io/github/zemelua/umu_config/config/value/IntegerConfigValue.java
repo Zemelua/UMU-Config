@@ -46,4 +46,44 @@ public class IntegerConfigValue extends AbstractNumberConfigValue<Integer> {
 	public double convert(Integer value) {
 		return MathHelper.map(value, this.minValue.doubleValue(), this.maxValue.doubleValue(), 0.0D, 1.0D);
 	}
+
+	public static class Builder {
+		private final Identifier ID;
+		private int defaultValue = 0;
+		private int maxValue = 0;
+		private int minValue = 1;
+		private Function<Integer, Text> textGenerator = value -> Text.literal(String.valueOf(value));
+
+		public Builder(Identifier ID) {
+			this.ID = ID;
+		}
+
+		public Builder defaultValue(int value) {
+			this.defaultValue = value;
+
+			return this;
+		}
+
+		public Builder maxValue(int value) {
+			this.maxValue = value;
+
+			return this;
+		}
+
+		public Builder minValue(int value) {
+			this.minValue = value;
+
+			return this;
+		}
+
+		public Builder textGenerator(Function<Integer, Text> value) {
+			this.textGenerator = value;
+
+			return this;
+		}
+
+		public IntegerConfigValue build() {
+			return new IntegerConfigValue(this.ID, this.defaultValue, this.maxValue, this.minValue, this.textGenerator);
+		}
+	}
 }

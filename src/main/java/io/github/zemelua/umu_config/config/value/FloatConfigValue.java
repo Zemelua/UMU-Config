@@ -6,6 +6,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
+import java.util.Locale;
 import java.util.function.Function;
 
 public class FloatConfigValue extends AbstractNumberConfigValue<Float> {
@@ -45,5 +46,45 @@ public class FloatConfigValue extends AbstractNumberConfigValue<Float> {
 	@Override
 	public double convert(Float value) {
 		return MathHelper.map(value, this.minValue.doubleValue(), this.maxValue.doubleValue(), 0.0D, 1.0D);
+	}
+
+	public static class Builder {
+		private final Identifier ID;
+		private float defaultValue = 0.0F;
+		private float maxValue = 0.0F;
+		private float minValue = 1.0F;
+		private Function<Float, Text> textGenerator = value -> Text.literal(String.format(Locale.ROOT, "%.1f", value));
+
+		public Builder(Identifier ID) {
+			this.ID = ID;
+		}
+
+		public Builder defaultValue(float value) {
+			this.defaultValue = value;
+
+			return this;
+		}
+
+		public Builder maxValue(float value) {
+			this.maxValue = value;
+
+			return this;
+		}
+
+		public Builder minValue(float value) {
+			this.minValue = value;
+
+			return this;
+		}
+
+		public Builder textGenerator(Function<Float, Text> value) {
+			this.textGenerator = value;
+
+			return this;
+		}
+
+		public FloatConfigValue build() {
+			return new FloatConfigValue(this.ID, this.defaultValue, this.maxValue, this.minValue, this.textGenerator);
+		}
 	}
 }

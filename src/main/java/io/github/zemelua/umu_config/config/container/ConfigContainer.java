@@ -5,10 +5,13 @@ import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigElement;
+import io.github.zemelua.umu_config.config.category.IConfigCategory;
+import io.github.zemelua.umu_config.config.value.IConfigValue;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigContainer implements IConfigContainer {
@@ -61,5 +64,30 @@ public class ConfigContainer implements IConfigContainer {
 		this.elements.forEach(value -> value.loadFrom(receivedNBT));
 
 		UMUConfig.LOGGER.info("Loaded config from packet: " + this.ID.toString());
+	}
+
+	public static class Builder {
+		private final Identifier ID;
+		private final List<IConfigElement> elements = new ArrayList<>();
+
+		public Builder(Identifier ID) {
+			this.ID = ID;
+		}
+
+		public Builder addValue(IConfigValue<?> value) {
+			this.elements.add(value);
+
+			return this;
+		}
+
+		public Builder addCategory(IConfigCategory category) {
+			this.elements.add(category);
+
+			return this;
+		}
+
+		public ConfigContainer build() {
+			return new ConfigContainer(this.ID, this.elements.toArray(new IConfigElement[0]));
+		}
 	}
 }

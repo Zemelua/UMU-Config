@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.client.gui.entry;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.IEnumConfigValue;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -25,11 +26,11 @@ public class EnumConfigEntry<T extends Enum<T>, V extends IConfigValue<T> & IEnu
 	protected void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 		this.editor.x = x + entryWidth / 2;
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.x);
-		this.editor.y = y;
+		this.editor.y = y + entryHeight / 2 - this.editor.getHeight() / 2;
 		this.editor.setMessage(this.config.getValueText(this.modifyingValue));
 		this.editor.render(matrices, mouseX, mouseY, tickDelta);
 
-		if (this.editor.isHovered()) {
+		if (ModClientConfigs.drawEnumEntryBar(this.editor)) {
 			int barWidth = this.editor.getWidth() - 16;
 			int size = this.config.getEnumClass().getEnumConstants().length;
 			float oneBarSize = (barWidth - (size - 1) * 2) / (float) size;

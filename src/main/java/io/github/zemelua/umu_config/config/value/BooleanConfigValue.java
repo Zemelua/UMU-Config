@@ -52,4 +52,23 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements 
 	public Text getValueText(Boolean value) {
 		return value ? ScreenTexts.ON : ScreenTexts.OFF;
 	}
+
+	public static class Builder {
+		private final Identifier ID;
+		private boolean defaultValue = true;
+
+		public Builder(Identifier ID) {
+			this.ID = ID;
+		}
+
+		public Builder defaultValue(boolean value) {
+			this.defaultValue = value;
+
+			return this;
+		}
+
+		public BooleanConfigValue build() {
+			return new BooleanConfigValue(this.ID, this.defaultValue);
+		}
+	}
 }

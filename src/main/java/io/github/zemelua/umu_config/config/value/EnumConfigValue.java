@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import org.jetbrains.annotations.NotNull;
 
 import static net.fabricmc.api.EnvType.*;
 
@@ -62,5 +63,25 @@ public class EnumConfigValue<T extends Enum<T>> extends AbstractConfigValue<T> i
 	@Override
 	public Class<T> getEnumClass() {
 		return this.clazz;
+	}
+
+	public static class Builder<E extends Enum<E>> {
+		private final Identifier ID;
+		@NotNull private E defaultValue;
+
+		public Builder(Identifier ID, Class<E> clazz) {
+			this.ID = ID;
+			this.defaultValue = clazz.getEnumConstants()[0];
+		}
+
+		public Builder<E> defaultValue(E value) {
+			this.defaultValue = value;
+
+			return this;
+		}
+
+		public EnumConfigValue<E> build() {
+			return new EnumConfigValue<>(this.ID, this.defaultValue);
+		}
 	}
 }

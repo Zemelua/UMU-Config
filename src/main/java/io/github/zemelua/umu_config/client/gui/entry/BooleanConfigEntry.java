@@ -22,7 +22,7 @@ public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfig
 	protected void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 		this.editor.x = x + entryWidth / 2;
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.x);
-		this.editor.y = y;
+		this.editor.y = y + entryHeight / 2 - this.editor.getHeight() / 2;
 		this.editor.setMessage(this.config.getValueText(BooleanConfigEntry.this.modifyingValue));
 		this.editor.render(matrices, mouseX, mouseY, tickDelta);
 	}

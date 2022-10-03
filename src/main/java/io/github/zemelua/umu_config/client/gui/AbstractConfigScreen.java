@@ -1,5 +1,6 @@
 package io.github.zemelua.umu_config.client.gui;
 
+import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.MinecraftClient;
@@ -64,13 +65,17 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 	}
 
 	protected ClickableWidget createCancelButton() {
-		return new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
+		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 + 5 : this.width / 2 - 155;
+
+		return new ButtonWidget(x, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
 				-> MinecraftClient.getInstance().setScreen(this.parent)
 		);
 	}
 
 	protected ClickableWidget createApplyButton() {
-		return new ButtonWidget(this.width / 2 + 5, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
+		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 - 155 : this.width / 2 + 5;
+
+		return new ButtonWidget(x, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
 			this.applyValues(button);
 			MinecraftClient.getInstance().setScreen(this.parent);
 		});
@@ -82,7 +87,7 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 		private final List<AbstractConfigEntry> configEntries = new ArrayList<>();
 
 		public ValueListWidget() {
-			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, AbstractConfigScreen.this.height - 32, 24);
+			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, AbstractConfigScreen.this.height - 32, ModClientConfigs.getEntrySpacing());
 
 			AbstractConfigScreen.this.config.getElements().forEach(value -> {
 				AbstractConfigEntry entry = value.createEntry(this, 0, AbstractConfigScreen.this.readOnly);

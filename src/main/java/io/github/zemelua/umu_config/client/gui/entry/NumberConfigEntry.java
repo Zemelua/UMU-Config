@@ -23,7 +23,7 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 	protected void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 		this.editor.x = x + entryWidth / 2;
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.x);
-		this.editor.y = y;
+		this.editor.y = y + entryHeight / 2 - this.editor.getHeight() / 2;
 		this.editor.applyValue();
 		this.editor.updateMessage();
 		this.editor.render(matrices, mouseX, mouseY, tickDelta);

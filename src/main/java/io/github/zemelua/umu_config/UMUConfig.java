@@ -1,7 +1,6 @@
 package io.github.zemelua.umu_config;
 
 import io.github.zemelua.umu_config.config.ConfigManager;
-import io.github.zemelua.umu_config.config.IConfigProvider;
 import io.github.zemelua.umu_config.config.category.ConfigCategory;
 import io.github.zemelua.umu_config.config.container.ConfigContainer;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
@@ -15,10 +14,9 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Locale;
 
-public class UMUConfig implements ModInitializer, IConfigProvider {
+public class UMUConfig implements ModInitializer {
 	public static final String MOD_ID = "umu_config";
 	public static final Logger LOGGER = LogManager.getLogger("UMU-Config");
 
@@ -66,10 +64,5 @@ public class UMUConfig implements ModInitializer, IConfigProvider {
 
 	public static Identifier identifier(String path) {
 		return new Identifier(MOD_ID, path);
-	}
-
-	@Override
-	public List<IConfigContainer> getConfigs() {
-		return List.of(EXAMPLE_CONFIG);
 	}
 }
