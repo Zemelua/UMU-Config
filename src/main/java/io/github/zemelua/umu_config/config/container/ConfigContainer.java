@@ -7,25 +7,24 @@ import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.config.IConfigElement;
 import io.github.zemelua.umu_config.config.category.IConfigCategory;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ConfigContainer implements IConfigContainer {
 	private final Identifier ID;
 	private final List<IConfigElement> elements;
+	private final Predicate<PlayerEntity> canEditTester;
 
-	public ConfigContainer(Identifier ID, IConfigElement... elements) {
+	public ConfigContainer(Identifier ID, Predicate<PlayerEntity> canEditTester, IConfigElement... elements) {
 		this.ID = ID;
+		this.canEditTester = canEditTester;
 		this.elements = ImmutableList.copyOf(elements);
-	}
-
-	@Override
-	public Identifier getID() {
-		return this.ID;
 	}
 
 	@Override
@@ -66,9 +65,20 @@ public class ConfigContainer implements IConfigContainer {
 		UMUConfig.LOGGER.info("Loaded config from packet: " + this.ID.toString());
 	}
 
+	@Override
+	public Identifier getID() {
+		return this.ID;
+	}
+
+	@Override
+	public boolean canEdit(PlayerEntity player) {
+		return this.canEditTester.test(player);
+	}
+
 	public static class Builder {
 		private final Identifier ID;
 		private final List<IConfigElement> elements = new ArrayList<>();
+		private Predicate<PlayerEntity> canEditTester = player -> player.hasPermissionLevel(4);
 
 		public Builder(Identifier ID) {
 			this.ID = ID;
@@ -80,14 +90,20 @@ public class ConfigContainer implements IConfigContainer {
 			return this;
 		}
 
-		public Builder addCategory(IConfigCategory category) {
-			this.elements.add(category);
+		public Builder addCategory(IConfigCategory value) {
+			this.elements.add(value);
+
+			return this;
+		}
+
+		public Builder canEditTester(Predicate<PlayerEntity> value) {
+			this.canEditTester = value;
 
 			return this;
 		}
 
 		public ConfigContainer build() {
-			return new ConfigContainer(this.ID, this.elements.toArray(new IConfigElement[0]));
+			return new ConfigContainer(this.ID, this.canEditTester, this.elements.toArray(new IConfigElement[0]));
 		}
 	}
 }

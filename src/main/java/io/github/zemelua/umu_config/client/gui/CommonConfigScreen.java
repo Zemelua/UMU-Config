@@ -23,7 +23,9 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 	private static final Text HAVE_NOT_PERMISSION_TOOLTIP = Text.translatable("gui.have_not_permission").formatted(Formatting.YELLOW);
 
 	public CommonConfigScreen(Screen parent, IConfigContainer config) {
-		super(parent, config);
+		super(parent, config, ModUtils.isInMultiplayServer() && !config.canEdit(MinecraftClient.getInstance().player)
+				? config.getName().copy().append(" (").append(Text.translatable("gui.read_only")).append(")")
+				: config.getName());
 	}
 
 	@Override
@@ -44,7 +46,10 @@ public final class CommonConfigScreen extends AbstractConfigScreen {
 	@Override
 	protected ClickableWidget createApplyButton() {
 		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 - 155 : this.width / 2 + 5;
-		Text message = this.readOnly ? Text.translatable("gui.read_only") : Text.translatable("gui.send_to_server");
+		Text message = Text.translatable("gui.ok");
+		if (ModUtils.isInMultiplayServer()) {
+			message = this.readOnly ? Text.translatable("gui.read_only") : Text.translatable("gui.send_to_server");
+		}
 
 		return new ButtonWidget(x, this.height - 29, 150, 20, message, button -> {
 			this.applyValues(button);

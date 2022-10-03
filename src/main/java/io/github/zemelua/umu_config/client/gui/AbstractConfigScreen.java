@@ -3,6 +3,7 @@ package io.github.zemelua.umu_config.client.gui;
 import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -27,14 +28,13 @@ public abstract sealed class AbstractConfigScreen extends Screen permits CommonC
 	@NotNull protected ClickableWidget cancelButton;
 	@NotNull protected ClickableWidget applyButton;
 
-	public AbstractConfigScreen(Screen parent, IConfigContainer config) {
-		super(MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().player.hasPermissionLevel(4)
-				? config.getName().copy().append(" (").append(Text.translatable("gui.read_only")).append(")")
-				: config.getName());
+	public AbstractConfigScreen(Screen parent, IConfigContainer config, Text title) {
+		super(title);
+
 		this.parent = parent;
 		this.config = config;
 
-		this.readOnly = MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().player.hasPermissionLevel(4);
+		this.readOnly = ModUtils.isInMultiplayServer() && !this.config.canEdit(MinecraftClient.getInstance().player);
 		this.valueListWidget = this.createValueListWidget();
 		this.cancelButton = this.createCancelButton();
 		this.applyButton = this.createApplyButton();

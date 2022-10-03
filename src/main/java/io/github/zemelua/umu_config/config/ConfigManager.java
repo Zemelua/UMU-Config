@@ -6,13 +6,13 @@ import com.mojang.datafixers.util.Pair;
 import io.github.zemelua.umu_config.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.util.ModUtils;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -22,7 +22,10 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static io.github.zemelua.umu_config.network.NetworkHandler.*;
@@ -69,7 +72,7 @@ public final class ConfigManager {
 		packet.writeIdentifier(config.getID());
 		packet.writeNbt(values);
 
-		if (MinecraftClient.getInstance().isIntegratedServerRunning() && !Objects.requireNonNull(MinecraftClient.getInstance().getServer()).isRemote()) {
+		if (!ModUtils.isInMultiplayServer()) {
 			ClientPlayNetworking.send(CHANNEL_SYNC_SINGLEPLAY_CONFIG, packet);
 		} else {
 			ClientPlayNetworking.send(CHANNEL_SYNC_MULTIPLAY_CONFIG, packet);

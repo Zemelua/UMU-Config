@@ -8,7 +8,7 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 
 public final class ClientConfigScreen extends AbstractConfigScreen {
 	public ClientConfigScreen(Screen parent, IConfigContainer config) {
-		super(parent, config);
+		super(parent, config, config.getName());
 	}
 
 	@Override

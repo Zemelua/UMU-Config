@@ -24,7 +24,7 @@ public final class NetworkHandler {
 			final Identifier configID = packet.readIdentifier();
 			final NbtCompound values = packet.readNbt();
 
-			server.execute(() -> PacketHandlers.syncMultiplayConfig(server, configID, values));
+			server.execute(() -> PacketHandlers.syncMultiplayConfig(server, configID, values, player));
 		});
 	}
 

@@ -3,6 +3,7 @@ package io.github.zemelua.umu_config.config.container;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.config.IConfigElement;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -25,6 +26,8 @@ public interface IConfigContainer {
 	void saveTo(NbtCompound sendNBT);
 
 	void loadFrom(NbtCompound receivedNBT);
+
+	boolean canEdit(PlayerEntity player);
 
 	Identifier getID();
 
