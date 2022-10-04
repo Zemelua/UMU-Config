@@ -56,9 +56,6 @@ jar {
 	}
 }
 
-
-apply from: "tokens.gradle"
-
 publishing {
 	publications {
 		gpr(MavenPublication) {
@@ -72,9 +69,8 @@ publishing {
 			name = "GitHubPackages"
 			url = uri("https://maven.pkg.github.com/zemelua/UMU-Config")
 			credentials {
-				username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-				// password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-				password = "${token}"
+				username = System.getenv("USERNAME")
+				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
 	}
