@@ -2,5 +2,6 @@
 	"gui.send_to_server": "Send to Server",
 	"gui.read_only": "Read Only",
 	"gui.tooltip.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
-	"gui.tooltip.not_have_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu."
+	"gui.tooltip.not_have_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu.",
+	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI."
 }

@@ -3,9 +3,20 @@
 	"id": "umu_config",
 	"version": "${version}",
 	"name": "UMU Config",
-	"description": "",
-	"authors": [ ],
-	"contact": { },
+	"description": "A complete config mod, even a server config is editable from the GUI.",
+	"authors": [
+		{
+			"name": "Zemelua",
+			"contact": {
+				"discord": "https://discord.com/users/553421324589072394"
+			}
+		}
+	],
+	"contact": {
+		"discord": "https://discord.com/invite/B6uYQW9Kwg",
+		"sources": "https://github.com/Zemelua/UMU-Config",
+		"issues": "https://github.com/Zemelua/UMU-Config/issues"
+	},
 	"license": "MIT",
 	"icon": "assets/umu_config/icon.png",
 	"environment": "*",
@@ -23,5 +34,16 @@
 		"fabricloader": ">=0.14.9",
 		"fabric": "*",
 		"minecraft": "1.19.x"
+	},
+	"suggests": {
+		"modmenu": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.com/invite/B6uYQW9Kwg"
+			},
+			"badges": [ "library" ]
+		}
 	}
 }
