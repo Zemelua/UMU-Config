@@ -3,5 +3,14 @@
 	"gui.read_only": "編集不可",
 	"gui.tooltip.apply_multiplay": "このボタンを押すと、編集したコンフィグがサーバーに送信されます。新しい編集内容がサーバーのゲームロジックに反映され、各プレイヤーにも送信されます。これについて不安がある場合はサーバーの管理者に問い合わせてください。",
 	"gui.tooltip.not_have_permission": "マルチプレイサーバーのコンフィグが表示されています。あなたにはこれを編集する権限がありません。編集したい場合は、サーバーの管理者に問い合わせてください。あなたの環境のコンフィグを編集したい場合、ワールドからログアウトし、メインメニューから編集できます。",
-	"modmenu.descriptionTranslation.umu_config": "コンフィグMODの完全版。サーバーのコンフィグだってGUIから編集できちゃいます。"
+	"config.error.failed_receive_config": "サーバーはあなたの送信した変更の受信に失敗しました。編集したコンフィグのMODのバージョンが異なるか、何らかのバグの可能性があります。",
+	"modmenu.descriptionTranslation.umu_config": "コンフィグMODの完全版。サーバーのコンフィグだってGUIから編集できちゃいます。",
+
+	"config.umu_config.client": "クライアントの設定",
+	"config.value.umu_client.reverse_apply_buttons": "決定ボタンの位置の逆転",
+	"config.value.umu_client.entry_spacing": "エントリの間隔",
+	"config.value.umu_client.enum_entry_bar": "列挙型エントリのバーのタイプ",
+	"config.enum.umu_client.enum_entry_bar.0": "常時",
+	"config.enum.umu_client.enum_entry_bar.1": "マウスホバー時のみ",
+	"config.enum.umu_client.enum_entry_bar.2": "オフ"
 }

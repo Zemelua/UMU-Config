@@ -12,7 +12,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 public final class PacketHandlers {
-	private static final Text FAILED_RECEIVE_CONFIG = Text.translatable("gui.failed_receive_config").formatted(Formatting.YELLOW);
+	private static final Text FAILED_RECEIVE_CONFIG = Text.translatable("config.error.failed_receive_config").formatted(Formatting.YELLOW);
 
 	public static void syncSingleplayConfig(Identifier ID, NbtCompound values) {
 		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);

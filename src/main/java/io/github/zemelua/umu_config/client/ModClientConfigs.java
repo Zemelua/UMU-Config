@@ -51,7 +51,7 @@ public class ModClientConfigs implements IConfigProvider {
 		ENUM_ENTRY_BAR = new EnumConfigValue.Builder<>(UMUConfig.identifier("enum_entry_bar"), EnumEntryBar.class)
 				.defaultValue(EnumEntryBar.OFF)
 				.build();
-		CLIENT_CONFIG = new ConfigContainer.Builder(UMUConfig.identifier("umu_config_client"))
+		CLIENT_CONFIG = new ConfigContainer.Builder(UMUConfig.identifier("client"))
 				.addValue(REVERSE_APPLY_BUTTONS)
 				.addValue(ENTRY_SPACING)
 				.addValue(ENUM_ENTRY_BAR)

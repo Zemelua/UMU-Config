@@ -3,5 +3,14 @@
 	"gui.read_only": "Read Only",
 	"gui.tooltip.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
 	"gui.tooltip.not_have_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu.",
-	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI."
+	"config.error.failed_receive_config": "The server failed to receive the changes you sent. It is possible that the mod version of the edited config is different or there is some bug.",
+	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI.",
+
+	"config.umu_config.client": "Client Config",
+	"config.value.umu_client.reverse_apply_buttons": "Reverse Apply Buttons",
+	"config.value.umu_client.entry_spacing": "Entry Spacing",
+	"config.value.umu_client.enum_entry_bar": "Enum Entry Bar Type",
+	"config.enum.umu_client.enum_entry_bar.0": "Constantly",
+	"config.enum.umu_client.enum_entry_bar.1": "On Hovered",
+	"config.enum.umu_client.enum_entry_bar.2": "OFF"
 }
