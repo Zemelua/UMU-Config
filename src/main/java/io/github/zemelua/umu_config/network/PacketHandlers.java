@@ -3,6 +3,7 @@ package io.github.zemelua.umu_config.network;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
@@ -10,6 +11,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+
+import static net.fabricmc.api.EnvType.*;
 
 public final class PacketHandlers {
 	private static final Text FAILED_RECEIVE_CONFIG = Text.translatable("config.error.failed_receive_config").formatted(Formatting.YELLOW);
@@ -35,9 +38,18 @@ public final class PacketHandlers {
 		}
 	}
 
+	@Environment(CLIENT)
 	public static void syncConfigOnClient(Identifier ID, NbtCompound values) {
 		IConfigContainer config = ConfigManager.byNameCommon(ID).orElseThrow(IllegalStateException::new);
 
 		config.loadFrom(values);
+	}
+
+	@Environment(CLIENT)
+	public static void reloadConfigsOnClient() {
+		ConfigManager.streamCommon().forEach(ConfigFileManager::loadTo);
+		ConfigManager.streamClient().forEach(ConfigFileManager::loadTo);
+		ConfigManager.streamCommon().forEach(ConfigFileManager::saveFrom);
+		ConfigManager.streamClient().forEach(ConfigFileManager::saveFrom);
 	}
 }

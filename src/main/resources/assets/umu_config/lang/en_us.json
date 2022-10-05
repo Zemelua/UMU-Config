@@ -6,7 +6,7 @@
 	"config.error.failed_receive_config": "The server failed to receive the changes you sent. It is possible that the mod version of the edited config is different or there is some bug.",
 	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI.",
 
-	"config.umu_config.client": "Client Config",
+	"config.umu_config.umu_config_client": "Client Config",
 	"config.value.umu_client.reverse_apply_buttons": "Reverse Apply Buttons",
 	"config.value.umu_client.entry_spacing": "Entry Spacing",
 	"config.value.umu_client.enum_entry_bar": "Enum Entry Bar Type",

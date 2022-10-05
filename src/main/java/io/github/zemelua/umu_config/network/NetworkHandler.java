@@ -29,6 +29,7 @@ public final class NetworkHandler {
 	}
 
 	public static final Identifier CHANNEL_SYNC_CONFIG_TO_CLIENT = UMUConfig.identifier("sync_config");
+	public static final Identifier RELOAD_CONFIGS_TO_CLIENT = UMUConfig.identifier("reload_configs");
 
 	@Environment(CLIENT)
 	public static void initializeClient() {
@@ -37,6 +38,9 @@ public final class NetworkHandler {
 			final NbtCompound values = packet.readNbt();
 
 			client.execute(() -> PacketHandlers.syncConfigOnClient(configID, values));
+		});
+		ClientPlayNetworking.registerGlobalReceiver(RELOAD_CONFIGS_TO_CLIENT, (client, handler, packet, sender) -> {
+			client.execute(PacketHandlers::reloadConfigsOnClient);
 		});
 	}
 
