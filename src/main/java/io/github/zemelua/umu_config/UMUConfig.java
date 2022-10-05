@@ -17,7 +17,7 @@ public class UMUConfig implements ModInitializer {
 		NetworkHandler.initialize();
 		ConfigManager.initialize();
 
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ConfigManager.stream()
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ConfigManager.streamCommon()
 				.forEach(config -> ConfigManager.sendToClient(handler.getPlayer(), config)));
 	}
 

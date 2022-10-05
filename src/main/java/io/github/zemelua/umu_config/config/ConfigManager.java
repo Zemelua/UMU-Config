@@ -46,8 +46,8 @@ public final class ConfigManager {
 			return Pair.of(modID, ImmutableList.copyOf(modConfig.getConfigs()));
 		}).collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond));
 
-		stream().forEach(ConfigFileManager::loadTo);
-		stream().forEach(ConfigFileManager::saveFrom);
+		streamCommon().forEach(ConfigFileManager::loadTo);
+		streamCommon().forEach(ConfigFileManager::saveFrom);
 	}
 
 	@Environment(CLIENT)
@@ -97,7 +97,7 @@ public final class ConfigManager {
 
 	@Environment(CLIENT)
 	public static Optional<Screen> openConfigScreen(Screen parent, String modID) {
-		List<IConfigContainer> config = Stream.concat(byModID(modID).stream(), byModIDClient(modID).stream()).toList();
+		List<IConfigContainer> config = Stream.concat(byModIDCommon(modID).stream(), byModIDClient(modID).stream()).toList();
 		if (config.isEmpty()) return Optional.empty();
 
 		if (config.size() == 1) {
@@ -107,7 +107,7 @@ public final class ConfigManager {
 		}
 	}
 
-	public static List<IConfigContainer> byModID(String modID) {
+	public static List<IConfigContainer> byModIDCommon(String modID) {
 		@Nullable List<IConfigContainer> configs = CONFIGS.get(modID);
 
 		return configs == null ? List.of() : new ArrayList<>(configs);
@@ -120,13 +120,13 @@ public final class ConfigManager {
 		return configs == null ? List.of() : new ArrayList<>(configs);
 	}
 
-	public static Optional<IConfigContainer> byName(Identifier ID) {
-		return stream()
+	public static Optional<IConfigContainer> byNameCommon(Identifier ID) {
+		return streamCommon()
 				.filter(config -> config.getID().equals(ID))
 				.findFirst();
 	}
 
-	public static Stream<IConfigContainer> stream() {
+	public static Stream<IConfigContainer> streamCommon() {
 		return CONFIGS.values().stream()
 				.flatMap(Collection::stream);
 	}

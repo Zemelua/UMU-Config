@@ -16,7 +16,7 @@ public class UMUConfigClient implements ClientModInitializer {
 		ConfigManager.initializeClient();
 		NetworkHandler.initializeClient();
 
-		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ConfigManager.stream()
+		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ConfigManager.streamCommon()
 				.forEach(ConfigFileManager::loadTo));
 	}
 }

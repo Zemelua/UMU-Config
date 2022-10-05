@@ -30,7 +30,7 @@ public class ConfigsScreen extends Screen {
 	@NotNull private ClickableWidget backButton;
 
 	public ConfigsScreen(Screen parent, String modID) {
-		this(parent, Text.of(ModUtils.getModName(modID)), ConfigManager.byModID(modID), ConfigManager.byModIDClient(modID));
+		this(parent, Text.of(ModUtils.getModName(modID)), ConfigManager.byModIDCommon(modID), ConfigManager.byModIDClient(modID));
 	}
 
 	public ConfigsScreen(Screen parent, Text title, List<IConfigContainer> configs, List<IConfigContainer> clientConfigs) {

@@ -15,14 +15,14 @@ public final class PacketHandlers {
 	private static final Text FAILED_RECEIVE_CONFIG = Text.translatable("config.error.failed_receive_config").formatted(Formatting.YELLOW);
 
 	public static void syncSingleplayConfig(Identifier ID, NbtCompound values) {
-		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);
+		IConfigContainer config = ConfigManager.byNameCommon(ID).orElseThrow(IllegalStateException::new);
 
 		config.loadFrom(values);
 		ConfigFileManager.saveFrom(config);
 	}
 
 	public static void syncMultiplayConfig(MinecraftServer server, Identifier ID, NbtCompound values, PlayerEntity sender) {
-		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);
+		IConfigContainer config = ConfigManager.byNameCommon(ID).orElseThrow(IllegalStateException::new);
 
 		if (config.canEdit(sender)) {
 			config.loadFrom(values);
@@ -36,7 +36,7 @@ public final class PacketHandlers {
 	}
 
 	public static void syncConfigOnClient(Identifier ID, NbtCompound values) {
-		IConfigContainer config = ConfigManager.byName(ID).orElseThrow(IllegalStateException::new);
+		IConfigContainer config = ConfigManager.byNameCommon(ID).orElseThrow(IllegalStateException::new);
 
 		config.loadFrom(values);
 	}
