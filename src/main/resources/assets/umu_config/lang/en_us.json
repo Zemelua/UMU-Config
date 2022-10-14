@@ -7,10 +7,13 @@
 	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI.",
 
 	"config.umu_config.umu_config_client": "Client Config",
-	"config.value.umu_client.reverse_apply_buttons": "Reverse Apply Buttons",
-	"config.value.umu_client.entry_spacing": "Entry Spacing",
-	"config.value.umu_client.enum_entry_bar": "Enum Entry Bar Type",
-	"config.enum.umu_client.enum_entry_bar.0": "Constantly",
-	"config.enum.umu_client.enum_entry_bar.1": "On Hovered",
-	"config.enum.umu_client.enum_entry_bar.2": "OFF"
+	"config.value.umu_config.reverse_apply_buttons": "Reverse Apply Buttons",
+	"config.value.umu_config.entry_spacing": "Entry Spacing",
+	"config.value.umu_config.enum_entry_bar": "Enum Entry Bar Type",
+	"config.value.tooltip.umu_config.reverse_apply_buttons": "Reverses the position of the Apply and Cancel buttons on config screens. When on, the Apply button is positioned to the left.",
+	"config.value.tooltip.umu_config.entry_spacing": "Sets the spacing between each entry on config screens.",
+	"config.value.tooltip.umu_config.enum_entry_bar": "Enum Entry Bar Type",
+	"config.enum.umu_config.enum_entry_bar.0": "Constantly",
+	"config.enum.umu_config.enum_entry_bar.1": "On Hovered",
+	"config.enum.umu_config.enum_entry_bar.2": "OFF"
 }
