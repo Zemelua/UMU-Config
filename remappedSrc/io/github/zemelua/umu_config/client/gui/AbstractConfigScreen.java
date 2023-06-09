@@ -6,11 +6,11 @@ import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
@@ -52,12 +52,12 @@ public abstract class AbstractConfigScreen extends Screen {
 	}
 
 	@Override
-	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-		this.renderBackground(context);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.renderBackground(matrices);
 
-		super.render(context, mouseX, mouseY, delta);
+		super.render(matrices, mouseX, mouseY, delta);
 
-		context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 	}
 
 	protected ValueListWidget createValueListWidget() {
@@ -67,18 +67,18 @@ public abstract class AbstractConfigScreen extends Screen {
 	protected ClickableWidget createCancelButton() {
 		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 + 5 : this.width / 2 - 155;
 
-		return new ButtonWidget.Builder(ScreenTexts.CANCEL, button -> MinecraftClient.getInstance().setScreen(this.parent))
-				.dimensions(x, this.height - 29, 150, 20)
-				.build();
+		return new ButtonWidget(x, this.height - 29, 150, 20, ScreenTexts.CANCEL, button
+				-> MinecraftClient.getInstance().setScreen(this.parent)
+		);
 	}
 
 	protected ClickableWidget createApplyButton() {
 		int x = ModClientConfigs.reverseApplyButtons() ? this.width / 2 - 155 : this.width / 2 + 5;
 
-		return new ButtonWidget.Builder(Text.translatable("gui.ok"), button -> {
+		return new ButtonWidget(x, this.height - 29, 150, 20, Text.translatable("gui.ok"), button -> {
 			this.applyValues(button);
 			MinecraftClient.getInstance().setScreen(this.parent);
-		}).dimensions(x, this.height - 29, 150, 20).build();
+		});
 	}
 
 	protected abstract void applyValues(ClickableWidget button);
@@ -97,13 +97,13 @@ public abstract class AbstractConfigScreen extends Screen {
 		}
 
 		@Override
-		public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-			super.render(context, mouseX, mouseY, delta);
+		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+			super.render(matrices, mouseX, mouseY, delta);
 
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 			if (this.getHoveredEntry() != null) {
 				List<OrderedText> tooltip = textRenderer.wrapLines(this.getHoveredEntry().getTooltip(), 200);
-				context.drawOrderedTooltip(textRenderer, tooltip, mouseX, mouseY);
+				AbstractConfigScreen.this.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
 			}
 		}
 

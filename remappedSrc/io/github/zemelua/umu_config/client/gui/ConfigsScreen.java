@@ -6,13 +6,13 @@ import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -40,9 +40,8 @@ public class ConfigsScreen extends Screen {
 		this.configs = ImmutableList.copyOf(configs);
 		this.clientConfigs = ImmutableList.copyOf(clientConfigs);
 		this.configListWidget = this.new ConfigListWidget();
-		this.backButton = new ButtonWidget.Builder(ScreenTexts.BACK, button -> MinecraftClient.getInstance().setScreen(this.parent))
-				.dimensions(this.width / 2 - 75, this.height - 29, 150, 20)
-				.build();
+		this.backButton = new ButtonWidget(this.width / 2 - 75, this.height - 29, 150, 20, ScreenTexts.BACK, button
+				-> MinecraftClient.getInstance().setScreen(this.parent));
 
 		this.addDrawableChild(this.configListWidget);
 		this.addDrawableChild(this.backButton);
@@ -51,21 +50,20 @@ public class ConfigsScreen extends Screen {
 	@Override
 	protected void init() {
 		this.configListWidget = this.new ConfigListWidget();
-		this.backButton = new ButtonWidget.Builder(ScreenTexts.BACK, button -> MinecraftClient.getInstance().setScreen(this.parent))
-				.dimensions(this.width / 2 - 75, this.height - 29, 150, 20)
-				.build();
+		this.backButton = new ButtonWidget(this.width / 2 - 75, this.height - 29, 150, 20, ScreenTexts.BACK, button
+				-> MinecraftClient.getInstance().setScreen(this.parent));
 
 		this.addDrawableChild(this.configListWidget);
 		this.addDrawableChild(this.backButton);
 	}
 
 	@Override
-	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-		this.renderBackground(context);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.renderBackground(matrices);
 
-		super.render(context, mouseX, mouseY, delta);
+		super.render(matrices, mouseX, mouseY, delta);
 
-		context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 	}
 
 	public class ConfigListWidget extends ElementListWidget<ConfigListWidget.ConfigEntry> {
@@ -98,9 +96,9 @@ public class ConfigsScreen extends Screen {
 			}
 
 			@Override
-			public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-				this.button.setY(y);
-				this.button.render(context, mouseX, mouseY, tickDelta);
+			public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+				this.button.y = y;
+				this.button.render(matrices, mouseX, mouseY, tickDelta);
 			}
 
 			@Override
@@ -117,20 +115,16 @@ public class ConfigsScreen extends Screen {
 		@Environment(CLIENT)
 		protected final class CommonConfigEntry extends ConfigEntry {
 			private CommonConfigEntry(IConfigContainer config) {
-				super(new ButtonWidget.Builder(config.getName(), button
-						-> MinecraftClient.getInstance().setScreen(new CommonConfigScreen(ConfigsScreen.this, config)))
-						.dimensions(ConfigListWidget.this.width / 2 - 155, 0, 310, 20)
-						.build());
+				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, config.getName(), button
+						-> MinecraftClient.getInstance().setScreen(new CommonConfigScreen(ConfigsScreen.this, config))));
 			}
 		}
 
 		@Environment(CLIENT)
 		protected final class ClientConfigEntry extends ConfigEntry {
 			private ClientConfigEntry(IConfigContainer config) {
-				super(new ButtonWidget.Builder(config.getName(), button
-						-> MinecraftClient.getInstance().setScreen(new ClientConfigScreen(ConfigsScreen.this, config)))
-						.dimensions(ConfigListWidget.this.width / 2 - 155, 0, 310, 20)
-						.build());
+				super(new ButtonWidget(ConfigListWidget.this.width / 2 - 155, 0, 310, 20, config.getName(), button
+						-> MinecraftClient.getInstance().setScreen(new ClientConfigScreen(ConfigsScreen.this, config))));
 			}
 		}
 	}

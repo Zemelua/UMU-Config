@@ -4,6 +4,7 @@ import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.INumberConfigValue;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.SliderWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -20,13 +21,13 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 	}
 
 	@Override
-	protected void renderEditor(DrawContext context, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		this.editor.setX(x + entryWidth / 2);
-		this.editor.setWidth(x + entryWidth - 65 - this.editor.getX());
-		this.editor.setY(y + entryHeight / 2 - this.editor.getHeight() / 2);
+	protected void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+		this.editor.x = x + entryWidth / 2;
+		this.editor.setWidth(x + entryWidth - 65 - this.editor.x);
+		this.editor.y = y + entryHeight / 2 - this.editor.getHeight() / 2;
 		this.editor.applyValue();
 		this.editor.updateMessage();
-		this.editor.render(context, mouseX, mouseY, tickDelta);
+		this.editor.render(matrices, mouseX, mouseY, tickDelta);
 	}
 
 	@Override
@@ -37,6 +38,11 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 	@Override
 	protected void onReset() {
 		this.editor.setValue(this.modifyingValue);
+	}
+
+	@Override
+	public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+
 	}
 
 	private class SliderEditor extends SliderWidget {
