@@ -20,8 +20,7 @@ dependencies {
 	mappings(group: 'net.fabricmc', name: 'yarn', version: project.yarn_mappings, classifier: 'v2')
 	modImplementation(group: 'net.fabricmc', name: 'fabric-loader', version: project.loader_version)
 	modImplementation(group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabric_version)
-	modCompileOnly(group: 'com.terraformersmc', name: 'modmenu', version: project.modmenu_version) { transitive(false) }
-	modRuntimeOnly(group: 'com.terraformersmc', name: 'modmenu', version: project.modmenu_version) { transitive(false) }
+	modImplementation(group: 'com.terraformersmc', name: 'modmenu', version: project.modmenu_version)
 }
 
 processResources {

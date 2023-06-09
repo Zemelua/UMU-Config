@@ -12,7 +12,7 @@
 	"config.value.umu_config.enum_entry_bar": "列挙型エントリのバーのタイプ",
 	"config.value.tooltip.umu_config.reverse_apply_buttons": "コンフィグ画面の、適用ボタンとキャンセルボタンの位置を逆転させます。オンのとき、適用ボタンが左に配置されます。",
 	"config.value.tooltip.umu_config.entry_spacing": "コンフィグ画面の、各エントリ間の間隔を設定します。",
-	"config.value.tooltip.umu_config.enum_entry_bar": "Enum Entry Bar Type",,
+	"config.value.tooltip.umu_config.enum_entry_bar": "Enum Entry Bar Type",
 	"config.enum.umu_config.enum_entry_bar.0": "常時",
 	"config.enum.umu_config.enum_entry_bar.1": "マウスホバー時のみ",
 	"config.enum.umu_config.enum_entry_bar.2": "オフ"
