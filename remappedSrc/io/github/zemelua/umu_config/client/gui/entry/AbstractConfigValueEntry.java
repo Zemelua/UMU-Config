@@ -3,9 +3,9 @@ package io.github.zemelua.umu_config.client.gui.entry;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ public abstract class AbstractConfigValueEntry<T, V extends IConfigValue<T>> ext
 	public AbstractConfigValueEntry(V config, int indent, boolean readOnly) {
 		super(indent);
 		this.config = config;
-		this.resetButton = new ButtonWidget(0, 0, 50, 20, Text.translatable("controls.reset"), button -> {
+		this.resetButton = new ButtonWidget.Builder(Text.translatable("controls.reset"), button -> {
 			this.modifyingValue = this.config.getDefaultValue();
 			this.onReset();
-		});
+		}).dimensions(0, 0, 50, 20).build();
 		this.readOnly = readOnly;
 
 		this.modifyingValue = this.config.getValue();
@@ -40,23 +40,24 @@ public abstract class AbstractConfigValueEntry<T, V extends IConfigValue<T>> ext
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		super.render(matrices, index, y, x, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
+	public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+		super.render(context, index, y, x, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
 
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-		textRenderer.draw(matrices, this.config.getName(), x + 10 + this.indent * 12, (float)(y + entryHeight / 2 - textRenderer.fontHeight / 2), 0xFFFFFF);
+		context.drawText(textRenderer, this.config.getName(), x + 10 + this.indent * 12, y + entryHeight / 2 - textRenderer.fontHeight / 2, 0xFFFFFF, false);
+		context.drawText(textRenderer, this.config.getName(), x + 10 + this.indent * 12, y + entryHeight / 2 - textRenderer.fontHeight / 2, 0xFFFFFF, false);
 
 		this.clickableWidgets.forEach(clickable -> clickable.active = !this.readOnly);
 
-		this.resetButton.x = x + entryWidth - 60;
-		this.resetButton.y = y + entryHeight / 2 - this.resetButton.getHeight() / 2;
+		this.resetButton.method_46421(x + entryWidth - 60);
+		this.resetButton.method_46419(y + entryHeight / 2 - this.resetButton.getHeight() / 2);
 		this.resetButton.active = !this.readOnly && !this.modifyingValue.equals(this.config.getDefaultValue());
-		this.resetButton.render(matrices, mouseX, mouseY, tickDelta);
+		this.resetButton.render(context, mouseX, mouseY, tickDelta);
 
-		this.renderEditor(matrices, x, y, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
+		this.renderEditor(context, x, y, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
 	}
 
-	protected abstract void renderEditor(MatrixStack matrices, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta);
+	protected abstract void renderEditor(DrawContext context, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta);
 
 	@Override
 	public Text getTooltip() {

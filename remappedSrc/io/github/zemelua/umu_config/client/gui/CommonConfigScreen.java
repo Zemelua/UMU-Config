@@ -1,16 +1,16 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.client.ModClientConfigs;
-import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.config.ConfigManager;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -29,14 +29,14 @@ public class CommonConfigScreen extends AbstractConfigScreen {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		super.render(matrices, mouseX, mouseY, delta);
+	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+		super.render(context, mouseX, mouseY, delta);
 
 		if (ModUtils.isInMultiplayServer() && this.applyButton.isHovered()) {
 			List<OrderedText> tooltip = this.readOnly
 					? this.textRenderer.wrapLines(NOT_HAVE_PERMISSION_TOOLTIP, 200)
 					: this.textRenderer.wrapLines(APPLY_MULTIPLAY_TOOLTIP, 200);
-			this.renderOrderedTooltip(matrices, tooltip, mouseX, mouseY);
+			context.drawOrderedTooltip(this.textRenderer, tooltip, mouseX, mouseY);
 		}
 	}
 
@@ -48,12 +48,13 @@ public class CommonConfigScreen extends AbstractConfigScreen {
 			message = this.readOnly ? Text.translatable("gui.read_only") : Text.translatable("gui.send_to_server");
 		}
 
-		return new ButtonWidget(x, this.height - 29, 150, 20, message, button -> {
+		ClickableWidget widget = new ButtonWidget.Builder(message, button -> {
 			this.applyValues(button);
 			MinecraftClient.getInstance().setScreen(this.parent);
-		}) {{
-			this.active = !CommonConfigScreen.this.readOnly;
-		}};
+		}).dimensions(x, this.height - 29, 150, 20).build();
+		widget.active = !CommonConfigScreen.this.readOnly;
+
+		return widget;
 	}
 
 	@Override

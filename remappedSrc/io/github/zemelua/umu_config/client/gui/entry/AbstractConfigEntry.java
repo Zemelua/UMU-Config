@@ -1,10 +1,9 @@
 package io.github.zemelua.umu_config.client.gui.entry;
 
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ElementListWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public abstract class AbstractConfigEntry extends ElementListWidget.Entry<Abstra
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+	public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 		if (hovered) {
-			DrawableHelper.fill(matrices, x, y, x + entryWidth, y + entryHeight, 0x24FFFFFF);
+			context.fill(x, y, x + entryWidth, y + entryHeight, 0x24FFFFFF);
 		}
 	}
 

@@ -5,7 +5,7 @@ import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.config.category.IConfigCategory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
@@ -39,12 +39,12 @@ public class ConfigCategoryEntry extends AbstractConfigEntry {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		super.render(matrices, index, y, x, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
+	public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+		super.render(context, index, y, x, entryWidth, entryHeight, mouseX, mouseY, hovered, tickDelta);
 
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 		OrderedText displayText = OrderedText.concat((this.isFolded ? UNFOLD_SIGN : FOLD_SIGN), Text.literal(" ").append(this.category.getName()).asOrderedText());
-		textRenderer.draw(matrices, displayText, x + 10 + this.indent * 12, (float) (y + entryHeight / 2 - textRenderer.fontHeight / 2), 0xFFFFFF);
+		context.drawText(textRenderer, displayText, x + 10 + this.indent * 12, y + entryHeight / 2 - textRenderer.fontHeight / 2, 0xFFFFFF, false);
 	}
 
 	@Override
