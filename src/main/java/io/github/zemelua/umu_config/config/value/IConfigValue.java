@@ -9,9 +9,7 @@ import static net.fabricmc.api.EnvType.*;
 
 public interface IConfigValue<T> extends IConfigElement {
 	T getValue();
-
 	void setValue(T value);
-
 	T getDefaultValue();
 
 	@Environment(CLIENT) Text getValueText(T value);

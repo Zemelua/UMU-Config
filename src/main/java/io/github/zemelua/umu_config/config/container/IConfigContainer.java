@@ -16,19 +16,12 @@ import static net.fabricmc.api.EnvType.*;
 
 public interface IConfigContainer {
 	List<IConfigElement> getElements();
-
 	Path getPath();
-
 	void saveTo(JsonObject fileJson);
-
 	void loadFrom(JsonObject fileJson);
-
 	void saveTo(NbtCompound sendNBT);
-
 	void loadFrom(NbtCompound receivedNBT);
-
 	boolean canEdit(PlayerEntity player);
-
 	Identifier getID();
 
 	@Environment(CLIENT)

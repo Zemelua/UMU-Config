@@ -12,13 +12,9 @@ import static net.fabricmc.api.EnvType.*;
 
 public interface IConfigElement {
 	void saveTo(JsonObject fileJson);
-
 	void loadFrom(JsonObject fileJson);
-
 	void saveTo(NbtCompound sendNBT);
-
 	void loadFrom(NbtCompound receivedNBT);
-
 	Identifier getID();
 
 	@Environment(CLIENT) Text getName();
