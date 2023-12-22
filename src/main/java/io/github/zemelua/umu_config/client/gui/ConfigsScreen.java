@@ -70,7 +70,7 @@ public class ConfigsScreen extends Screen {
 
 	public class ConfigListWidget extends ElementListWidget<ConfigListWidget.ConfigEntry> {
 		public ConfigListWidget() {
-			super(ConfigsScreen.this.client, ConfigsScreen.this.width, ConfigsScreen.this.height, 20, ConfigsScreen.this.height - 32, 24);
+			super(ConfigsScreen.this.client, ConfigsScreen.this.width, ConfigsScreen.this.height, 20, 24);
 
 			for (IConfigContainer config : ConfigsScreen.this.configs) {
 				this.addEntry(new CommonConfigEntry(config));
