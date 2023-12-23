@@ -8,6 +8,7 @@ import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
 import io.github.zemelua.umu_config.config.value.EnumConfigValue;
 import io.github.zemelua.umu_config.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.config.value.reference.ResourcePackConfigValue;
 import net.minecraft.client.gui.widget.ClickableWidget;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ModClientConfigs implements IConfigProvider {
 	private static final IConfigValue<Boolean> REVERSE_APPLY_BUTTONS;
 	private static final IConfigValue<Integer> ENTRY_SPACING;
 	private static final IConfigValue<EnumEntryBar> ENUM_ENTRY_BAR;
+	private static final IConfigValue<Boolean> RESOURCE_PACK_TEST;
 	private static final IConfigContainer CLIENT_CONFIG;
 
 	@Override
@@ -51,10 +53,12 @@ public class ModClientConfigs implements IConfigProvider {
 		ENUM_ENTRY_BAR = new EnumConfigValue.Builder<>(UMUConfig.identifier("enum_entry_bar"), EnumEntryBar.class)
 				.defaultValue(EnumEntryBar.OFF)
 				.build();
+		RESOURCE_PACK_TEST = new ResourcePackConfigValue(UMUConfig.identifier("resource_pack_test"), UMUConfig.identifier("test").toString());
 		CLIENT_CONFIG = new ConfigContainer.Builder(UMUConfig.identifier("umu_config_client"))
 				.addValue(REVERSE_APPLY_BUTTONS)
 				.addValue(ENTRY_SPACING)
 				.addValue(ENUM_ENTRY_BAR)
+				.addValue(RESOURCE_PACK_TEST)
 				.build();
 	}
 

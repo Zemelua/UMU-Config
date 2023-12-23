@@ -15,5 +15,6 @@ public class ClientConfigScreen extends AbstractConfigScreen {
 	protected void applyValues(ClickableWidget button) {
 		this.valueListWidget.getConfigEntries().forEach(AbstractConfigEntry::applyValue);
 		ConfigFileManager.saveFrom(this.config);
+
 	}
 }
