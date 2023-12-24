@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.api.client.gui.entry;
 
-import io.github.zemelua.umu_config.config.value.IConfigValue;
-import io.github.zemelua.umu_config.config.value.INumberConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IConfigValue;
+import io.github.zemelua.umu_config.api.config.value.INumberConfigValue;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
@@ -21,9 +21,9 @@ public class NumberConfigEntry<T extends Number, V extends IConfigValue<T> & INu
 
 	@Override
 	protected void renderEditor(DrawContext context, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		this.editor.method_46421(x + entryWidth / 2);
+		this.editor.setX(x + entryWidth / 2);
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.getX());
-		this.editor.method_46419(y + entryHeight / 2 - this.editor.getHeight() / 2);
+		this.editor.setY(y + entryHeight / 2 - this.editor.getHeight() / 2);
 		this.editor.applyValue();
 		this.editor.updateMessage();
 		this.editor.render(context, mouseX, mouseY, tickDelta);

@@ -1,9 +1,9 @@
-package io.github.zemelua.umu_config.config.category;
+package io.github.zemelua.umu_config.api.config.category;
 
-import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
+import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.api.client.gui.entry.ConfigCategoryEntry;
-import io.github.zemelua.umu_config.config.IConfigElement;
+import io.github.zemelua.umu_config.api.config.IConfigElement;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;

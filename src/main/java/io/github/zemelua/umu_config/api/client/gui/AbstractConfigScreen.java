@@ -1,8 +1,9 @@
-package io.github.zemelua.umu_config.client.gui;
+package io.github.zemelua.umu_config.api.client.gui;
 
 import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.api.config.ConfigFileManager;
+import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -38,6 +39,8 @@ public abstract class AbstractConfigScreen extends Screen {
 		this.valueListWidget = this.createValueListWidget();
 		this.cancelButton = this.createCancelButton();
 		this.applyButton = this.createApplyButton();
+
+		ConfigFileManager.loadTo(this.config);
 	}
 
 	@Override
@@ -87,7 +90,7 @@ public abstract class AbstractConfigScreen extends Screen {
 		private final List<AbstractConfigEntry> configEntries = new ArrayList<>();
 
 		public ValueListWidget() {
-			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, AbstractConfigScreen.this.height - 32, ModClientConfigs.getEntrySpacing());
+			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, ModClientConfigs.getEntrySpacing());
 
 			AbstractConfigScreen.this.config.getElements().forEach(value -> {
 				AbstractConfigEntry entry = value.createEntry(this, 0, AbstractConfigScreen.this.readOnly);
@@ -97,8 +100,8 @@ public abstract class AbstractConfigScreen extends Screen {
 		}
 
 		@Override
-		public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-			super.render(context, mouseX, mouseY, delta);
+		public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+			super.renderWidget(context, mouseX, mouseY, delta);
 
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 			if (this.getHoveredEntry() != null) {

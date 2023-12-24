@@ -2,8 +2,8 @@ package io.github.zemelua.umu_config.api.client.gui.entry;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.zemelua.umu_config.client.ModClientConfigs;
-import io.github.zemelua.umu_config.config.value.IConfigValue;
-import io.github.zemelua.umu_config.config.value.IEnumConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IEnumConfigValue;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.*;
@@ -26,9 +26,9 @@ public class EnumConfigEntry<T extends Enum<T>, V extends IConfigValue<T> & IEnu
 
 	@Override
 	protected void renderEditor(DrawContext context, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		this.editor.method_46421(x + entryWidth / 2);
+		this.editor.setX(x + entryWidth / 2);
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.getX());
-		this.editor.method_46419(y + entryHeight / 2 - this.editor.getHeight() / 2);
+		this.editor.setY(y + entryHeight / 2 - this.editor.getHeight() / 2);
 		this.editor.setMessage(this.config.getValueText(this.modifyingValue));
 		this.editor.render(context, mouseX, mouseY, tickDelta);
 

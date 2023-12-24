@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config;
 
-import io.github.zemelua.umu_config.config.IConfigProvider;
-import io.github.zemelua.umu_config.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.api.config.IConfigProvider;
+import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 
 import java.util.List;
 

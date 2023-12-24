@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.api.client.gui.entry;
 
-import io.github.zemelua.umu_config.config.value.IConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -49,8 +49,8 @@ public abstract class AbstractConfigValueEntry<T, V extends IConfigValue<T>> ext
 
 		this.clickableWidgets.forEach(clickable -> clickable.active = !this.readOnly);
 
-		this.resetButton.method_46421(x + entryWidth - 60);
-		this.resetButton.method_46419(y + entryHeight / 2 - this.resetButton.getHeight() / 2);
+		this.resetButton.setX(x + entryWidth - 60);
+		this.resetButton.setY(y + entryHeight / 2 - this.resetButton.getHeight() / 2);
 		this.resetButton.active = !this.readOnly && !this.modifyingValue.equals(this.config.getDefaultValue());
 		this.resetButton.render(context, mouseX, mouseY, tickDelta);
 

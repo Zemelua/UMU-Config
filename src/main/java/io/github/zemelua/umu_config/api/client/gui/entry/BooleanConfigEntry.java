@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.api.client.gui.entry;
 
-import io.github.zemelua.umu_config.config.value.IBooleanConfigValue;
-import io.github.zemelua.umu_config.config.value.IConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IBooleanConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
@@ -22,9 +22,9 @@ public class BooleanConfigEntry<V extends IConfigValue<Boolean> & IBooleanConfig
 
 	@Override
 	protected void renderEditor(DrawContext context, int x, int y, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-		this.editor.method_46421(x + entryWidth / 2);
+		this.editor.setX(x + entryWidth / 2);
 		this.editor.setWidth(x + entryWidth - 65 - this.editor.getX());
-		this.editor.method_46419(y + entryHeight / 2 - this.editor.getHeight() / 2);
+		this.editor.setY(y + entryHeight / 2 - this.editor.getHeight() / 2);
 		this.editor.setMessage(this.config.getValueText(BooleanConfigEntry.this.modifyingValue));
 		this.editor.render(context, mouseX, mouseY, tickDelta);
 	}

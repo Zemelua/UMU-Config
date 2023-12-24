@@ -1,14 +1,14 @@
 package io.github.zemelua.umu_config.client;
 
 import io.github.zemelua.umu_config.UMUConfig;
-import io.github.zemelua.umu_config.config.IConfigProvider;
-import io.github.zemelua.umu_config.config.container.ConfigContainer;
-import io.github.zemelua.umu_config.config.container.IConfigContainer;
-import io.github.zemelua.umu_config.config.value.BooleanConfigValue;
-import io.github.zemelua.umu_config.config.value.EnumConfigValue;
-import io.github.zemelua.umu_config.config.value.IConfigValue;
-import io.github.zemelua.umu_config.config.value.IntegerConfigValue;
-import io.github.zemelua.umu_config.config.value.reference.ResourcePackConfigValue;
+import io.github.zemelua.umu_config.api.config.IConfigProvider;
+import io.github.zemelua.umu_config.api.config.container.ConfigContainer;
+import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.api.config.value.BooleanConfigValue;
+import io.github.zemelua.umu_config.api.config.value.EnumConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IConfigValue;
+import io.github.zemelua.umu_config.api.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.api.config.value.reference.ResourcePackConfigValue;
 import net.minecraft.client.gui.widget.ClickableWidget;
 
 import java.util.List;

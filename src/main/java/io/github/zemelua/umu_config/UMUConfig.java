@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config;
 
-import io.github.zemelua.umu_config.config.ConfigManager;
+import io.github.zemelua.umu_config.api.config.ConfigManager;
 import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;

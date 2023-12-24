@@ -1,8 +1,8 @@
 package io.github.zemelua.umu_config.api.client.gui.entry;
 
 import com.google.common.collect.ImmutableList;
-import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
-import io.github.zemelua.umu_config.config.category.IConfigCategory;
+import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
+import io.github.zemelua.umu_config.api.config.category.IConfigCategory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

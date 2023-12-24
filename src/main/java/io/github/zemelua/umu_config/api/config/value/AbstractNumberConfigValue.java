@@ -1,6 +1,6 @@
-package io.github.zemelua.umu_config.config.value;
+package io.github.zemelua.umu_config.api.config.value;
 
-import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
+import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.api.client.gui.entry.NumberConfigEntry;
 import net.fabricmc.api.Environment;
