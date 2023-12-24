@@ -2,7 +2,7 @@ package io.github.zemelua.umu_config.api.config.container;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.api.config.ConfigFileManager;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.api.config.IConfigElement;
 import io.github.zemelua.umu_config.api.config.category.IConfigCategory;

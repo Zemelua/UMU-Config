@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_config.api.config;
+package io.github.zemelua.umu_config.config;
 
 import com.google.gson.*;
 import io.github.zemelua.umu_config.UMUConfig;

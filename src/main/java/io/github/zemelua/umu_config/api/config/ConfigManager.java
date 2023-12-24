@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import io.github.zemelua.umu_config.api.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.api.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;

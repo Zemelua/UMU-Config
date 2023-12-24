@@ -1,6 +1,6 @@
 package io.github.zemelua.umu_config.network;
 
-import io.github.zemelua.umu_config.api.config.ConfigFileManager;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.api.config.ConfigManager;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import net.fabricmc.api.Environment;
