@@ -3,7 +3,7 @@ package io.github.zemelua.umu_config.client;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import io.github.zemelua.umu_config.UMUConfig;
-import io.github.zemelua.umu_config.api.config.ConfigManager;
+import io.github.zemelua.umu_config.old.api.config.ConfigManager;
 
 public class ModMenuImpl implements ModMenuApi {
 	@Override

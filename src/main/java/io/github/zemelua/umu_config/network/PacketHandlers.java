@@ -1,8 +1,8 @@
 package io.github.zemelua.umu_config.network;
 
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import io.github.zemelua.umu_config.api.config.ConfigManager;
-import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.old.api.config.ConfigManager;
+import io.github.zemelua.umu_config.old.api.config.container.IConfigContainer;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.mixin;
 
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import io.github.zemelua.umu_config.api.config.ConfigManager;
+import io.github.zemelua.umu_config.old.api.config.ConfigManager;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.command.ReloadCommand;

@@ -1,10 +1,10 @@
 package io.github.zemelua.umu_config.api.client.gui;
 
 import io.github.zemelua.umu_config.client.ModClientConfigs;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.old.api.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import io.github.zemelua.umu_config.api.config.ConfigManager;
-import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.old.api.config.ConfigManager;
+import io.github.zemelua.umu_config.old.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -62,9 +62,9 @@ public class CommonConfigScreen extends AbstractConfigScreen {
 		this.valueListWidget.getConfigEntries().forEach(AbstractConfigEntry::applyValue);
 
 		if (Objects.requireNonNull(this.client).world == null) {
-			ConfigFileManager.saveFrom(this.config);
+			ConfigFileManager.saveFrom(this.options);
 		} else {
-			ConfigManager.sendToServer(this.config);
+			ConfigManager.sendToServer(this.options);
 		}
 	}
 }

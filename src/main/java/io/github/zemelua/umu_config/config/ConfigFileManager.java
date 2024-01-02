@@ -2,7 +2,7 @@ package io.github.zemelua.umu_config.config;
 
 import com.google.gson.*;
 import io.github.zemelua.umu_config.UMUConfig;
-import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.old.api.config.container.IConfigContainer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.SerializationException;
 

@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.client.ModClientConfigs;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.old.api.client.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
