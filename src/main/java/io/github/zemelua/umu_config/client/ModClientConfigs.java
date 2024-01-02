@@ -8,7 +8,10 @@ import io.github.zemelua.umu_config.api.config.value.BooleanConfigValue;
 import io.github.zemelua.umu_config.api.config.value.EnumConfigValue;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import io.github.zemelua.umu_config.api.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.api.config.value.enternal.IKeyBindConfigValue;
+import io.github.zemelua.umu_config.api.config.value.enternal.KeyBindConfigValue;
 import io.github.zemelua.umu_config.api.config.value.reference.ResourcePackConfigValue;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ClickableWidget;
 
 import java.util.List;
@@ -18,6 +21,7 @@ public class ModClientConfigs implements IConfigProvider {
 	private static final IConfigValue<Integer> ENTRY_SPACING;
 	private static final IConfigValue<EnumEntryBar> ENUM_ENTRY_BAR;
 	private static final IConfigValue<Boolean> RESOURCE_PACK_TEST;
+	private static final IKeyBindConfigValue KEY_BIND;
 	private static final IConfigContainer CLIENT_CONFIG;
 
 	@Override
@@ -54,11 +58,13 @@ public class ModClientConfigs implements IConfigProvider {
 				.defaultValue(EnumEntryBar.OFF)
 				.build();
 		RESOURCE_PACK_TEST = new ResourcePackConfigValue(UMUConfig.identifier("resource_pack_test"), UMUConfig.identifier("test").toString());
+		KEY_BIND = new KeyBindConfigValue(UMUConfig.identifier("key"), () -> MinecraftClient.getInstance().options.dropKey);
 		CLIENT_CONFIG = new ConfigContainer.Builder(UMUConfig.identifier("umu_config_client"))
 				.addValue(REVERSE_APPLY_BUTTONS)
 				.addValue(ENTRY_SPACING)
 				.addValue(ENUM_ENTRY_BAR)
 				.addValue(RESOURCE_PACK_TEST)
+				.addValue(KEY_BIND)
 				.build();
 	}
 
