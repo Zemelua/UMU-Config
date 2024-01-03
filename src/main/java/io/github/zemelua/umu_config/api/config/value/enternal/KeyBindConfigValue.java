@@ -3,7 +3,7 @@ package io.github.zemelua.umu_config.api.config.value.enternal;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
 import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.api.client.gui.entry.KeyBindConfigEntry;
+import io.github.zemelua.umu_config.api.client.gui.entry.KeyBindConfigEntryOld;
 import io.github.zemelua.umu_config.mixin.AccessorKeyBinding;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -49,7 +49,7 @@ public class KeyBindConfigValue implements IKeyBindConfigValue {
 
 	@Override
 	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
-		return new KeyBindConfigEntry<>(this, indent, readOnly);
+		return new KeyBindConfigEntryOld<>(this, indent, readOnly);
 	}
 
 	@Override

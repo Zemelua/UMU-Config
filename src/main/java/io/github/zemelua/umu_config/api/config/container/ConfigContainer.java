@@ -1,12 +1,15 @@
 package io.github.zemelua.umu_config.api.config.container;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.UMUConfig;
+import io.github.zemelua.umu_config.api.client.gui.ConfigEntryFactory;
 import io.github.zemelua.umu_config.api.config.IConfigElement;
 import io.github.zemelua.umu_config.api.config.category.IConfigCategory;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -19,12 +22,14 @@ import java.util.function.Predicate;
 public class ConfigContainer implements IConfigContainer {
 	private final Identifier ID;
 	private final List<IConfigElement> elements;
+	private final Multimap<Integer, ConfigEntryFactory> optionals;
 	private final Predicate<PlayerEntity> canEditTester;
 
-	public ConfigContainer(Identifier ID, Predicate<PlayerEntity> canEditTester, IConfigElement... elements) {
+	public ConfigContainer(Identifier ID, Predicate<PlayerEntity> canEditTester, Multimap<Integer, ConfigEntryFactory> optionals, IConfigElement... elements) {
 		this.ID = ID;
 		this.canEditTester = canEditTester;
 		this.elements = ImmutableList.copyOf(elements);
+		this.optionals = optionals;
 	}
 
 	@Override
@@ -71,6 +76,11 @@ public class ConfigContainer implements IConfigContainer {
 	}
 
 	@Override
+	public Multimap<Integer, ConfigEntryFactory> optionalSettings() {
+		return this.optionals;
+	}
+
+	@Override
 	public boolean canEdit(PlayerEntity player) {
 		return this.canEditTester.test(player);
 	}
@@ -78,6 +88,7 @@ public class ConfigContainer implements IConfigContainer {
 	public static class Builder {
 		private final Identifier ID;
 		private final List<IConfigElement> elements = new ArrayList<>();
+		private final Multimap<Integer, ConfigEntryFactory> optionals = ArrayListMultimap.create();
 		private Predicate<PlayerEntity> canEditTester = player -> player.hasPermissionLevel(4);
 
 		public Builder(Identifier ID) {
@@ -102,8 +113,14 @@ public class ConfigContainer implements IConfigContainer {
 			return this;
 		}
 
+		public Builder addOptionalSetting(int index, ConfigEntryFactory value) {
+			this.optionals.put(index, value);
+
+			return this;
+		}
+
 		public ConfigContainer build() {
-			return new ConfigContainer(this.ID, this.canEditTester, this.elements.toArray(new IConfigElement[0]));
+			return new ConfigContainer(this.ID, this.canEditTester, this.optionals, this.elements.toArray(new IConfigElement[0]));
 		}
 	}
 }

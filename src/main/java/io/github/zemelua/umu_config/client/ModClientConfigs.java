@@ -65,6 +65,7 @@ public class ModClientConfigs implements IConfigProvider {
 				.addValue(ENUM_ENTRY_BAR)
 				.addValue(RESOURCE_PACK_TEST)
 				.addValue(KEY_BIND)
+				// .addOptionalSetting(5, (parent, indent, readOnly) -> new KeyBindConfigEntry(parent, MinecraftClient.getInstance().options.dropKey, indent, readOnly))
 				.build();
 	}
 

@@ -1,9 +1,9 @@
 package io.github.zemelua.umu_config.api.client.gui;
 
-import io.github.zemelua.umu_config.client.ModClientConfigs;
 import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
+import io.github.zemelua.umu_config.client.ModClientConfigs;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.util.ModUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -18,7 +18,9 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractConfigScreen extends Screen {
 	protected final Screen parent;
@@ -92,11 +94,25 @@ public abstract class AbstractConfigScreen extends Screen {
 		public ValueListWidget() {
 			super(AbstractConfigScreen.this.client, AbstractConfigScreen.this.width, AbstractConfigScreen.this.height, 20, ModClientConfigs.getEntrySpacing());
 
-			AbstractConfigScreen.this.config.getElements().forEach(value -> {
-				AbstractConfigEntry entry = value.createEntry(this, 0, AbstractConfigScreen.this.readOnly);
+			for (int i = 0; i < AbstractConfigScreen.this.config.getElements().size(); i++) {
+				Collection<ConfigEntryFactory> factory = AbstractConfigScreen.this.config.optionalSettings().get(i);
+				factory.forEach(f -> this.addEntry(f.createEntry(this, 0, AbstractConfigScreen.this.readOnly)));
+
+				AbstractConfigEntry entry = AbstractConfigScreen.this.config.getElements().get(i).createEntry(this, 0, AbstractConfigScreen.this.readOnly);
 				this.addEntry(entry);
 				this.configEntries.add(entry);
-			});
+			}
+
+			AbstractConfigScreen.this.config.optionalSettings().entries().stream()
+					.filter(e -> e.getKey() >= AbstractConfigScreen.this.config.getElements().size())
+					.map(Map.Entry::getValue)
+					.forEach(f -> this.addEntry(f.createEntry(this, 0, AbstractConfigScreen.this.readOnly)));
+
+//			AbstractConfigScreen.this.config.getElements().forEach(value -> {
+//				AbstractConfigEntry entry = value.createEntry(this, 0, AbstractConfigScreen.this.readOnly);
+//				this.addEntry(entry);
+//				this.configEntries.add(entry);
+//			});
 		}
 
 		@Override

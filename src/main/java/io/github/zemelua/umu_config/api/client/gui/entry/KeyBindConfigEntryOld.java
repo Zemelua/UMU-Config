@@ -14,12 +14,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
-public class KeyBindConfigEntry<V extends IConfigValue<InputUtil.Key> & IKeyBindConfigValue> extends AbstractConfigValueEntry<InputUtil.Key, V> {
+public class KeyBindConfigEntryOld<V extends IConfigValue<InputUtil.Key> & IKeyBindConfigValue> extends AbstractConfigValueEntry<InputUtil.Key, V> {
 	private final ButtonWidget editor;
 	private boolean selected;
 	private boolean duplicate;
 
-	public KeyBindConfigEntry(V config, int indent, boolean readOnly) {
+	public KeyBindConfigEntryOld(V config, int indent, boolean readOnly) {
 		super(config, indent, readOnly);
 
 		this.editor = ButtonWidget.builder(config.getKeyBinding().getBoundKeyLocalizedText(), button -> {
@@ -34,6 +34,7 @@ public class KeyBindConfigEntry<V extends IConfigValue<InputUtil.Key> & IKeyBind
 		this.selectableChildren.add(this.editor);
 		this.clickableWidgets.add(this.editor);
 		this.editor.active = config.isAvailable();
+		this.update();
 	}
 
 	private void update() {
@@ -92,5 +93,9 @@ public class KeyBindConfigEntry<V extends IConfigValue<InputUtil.Key> & IKeyBind
 		}
 
 		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	@Override
+	public void applyValue() {
 	}
 }
