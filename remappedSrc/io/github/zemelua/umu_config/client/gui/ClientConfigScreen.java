@@ -1,7 +1,7 @@
 package io.github.zemelua.umu_config.client.gui;
 
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.old.gui.entry.AbstractConfigEntry;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ClickableWidget;

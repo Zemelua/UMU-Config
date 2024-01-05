@@ -1,74 +1,45 @@
 package io.github.zemelua.umu_config.api.config.value;
 
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.api.client.gui.entry.BooleanConfigEntry;
-import net.fabricmc.api.Environment;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static net.fabricmc.api.EnvType.*;
-
-public class BooleanConfigValue extends AbstractConfigValue<Boolean> implements IBooleanConfigValue {
-	public BooleanConfigValue(Identifier ID, Boolean defaultValue) {
-		super(ID, defaultValue);
+public class BooleanConfigValue extends AbstractConfigValue<Boolean> {
+	public BooleanConfigValue(Identifier id, Boolean defaultValue) {
+		super(id, defaultValue);
 	}
 
 	@Override
 	public void saveTo(JsonObject fileJson) {
-		fileJson.addProperty(this.ID.getPath(), this.value);
+		fileJson.addProperty(this.getKey(), this.getValue());
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
-		if (fileJson.has(this.ID.getPath())) {
-			this.value = fileJson.get(this.ID.getPath()).getAsBoolean();
+		if (fileJson.has(this.getKey())) {
+			this.setValue(fileJson.get(this.getKey()).getAsBoolean());
 		}
 	}
 
-	@Override
-	public void saveTo(NbtCompound sendNBT) {
-		sendNBT.putBoolean(this.ID.getPath(), this.value);
-	}
-
-	@Override
-	public void loadFrom(NbtCompound receivedNBT) {
-		if (receivedNBT.contains(this.ID.getPath())) {
-			this.value = receivedNBT.getBoolean(this.ID.getPath());
-		}
-	}
-
-	@Environment(CLIENT)
-	@Override
-	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
-		return new BooleanConfigEntry<>(this, indent, readOnly);
-	}
-
-	@Environment(CLIENT)
-	@Override
-	public Text getValueText(Boolean value) {
-		return value ? ScreenTexts.ON : ScreenTexts.OFF;
+	public static Builder builder(Identifier id) {
+		return new Builder(id);
 	}
 
 	public static class Builder {
-		private final Identifier ID;
+		private final Identifier id;
 		private boolean defaultValue = true;
 
-		public Builder(Identifier ID) {
-			this.ID = ID;
+		private Builder(Identifier id) {
+			this.id = id;
 		}
 
-		public Builder defaultValue(boolean value) {
-			this.defaultValue = value;
+		public Builder defaultValue(boolean defaultValue) {
+			this.defaultValue = defaultValue;
 
 			return this;
 		}
 
 		public BooleanConfigValue build() {
-			return new BooleanConfigValue(this.ID, this.defaultValue);
+			return new BooleanConfigValue(this.id, this.defaultValue);
 		}
 	}
 }

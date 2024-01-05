@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_config.api.client.gui.entry;
+package io.github.zemelua.umu_config.old.gui.entry;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.zemelua.umu_config.client.ModClientConfigs;

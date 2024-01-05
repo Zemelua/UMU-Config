@@ -1,98 +1,66 @@
 package io.github.zemelua.umu_config.api.config.container;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.UMUConfig;
-import io.github.zemelua.umu_config.api.client.gui.ConfigEntryFactory;
 import io.github.zemelua.umu_config.api.config.IConfigElement;
 import io.github.zemelua.umu_config.api.config.category.IConfigCategory;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class ConfigContainer implements IConfigContainer {
-	private final Identifier ID;
-	private final List<IConfigElement> elements;
-	private final Multimap<Integer, ConfigEntryFactory> optionals;
-	private final Predicate<PlayerEntity> canEditTester;
+	private final Identifier id;
+	private final ImmutableList<IConfigElement> elements;
 
-	public ConfigContainer(Identifier ID, Predicate<PlayerEntity> canEditTester, Multimap<Integer, ConfigEntryFactory> optionals, IConfigElement... elements) {
-		this.ID = ID;
-		this.canEditTester = canEditTester;
+	public ConfigContainer(Identifier id, IConfigElement... elements) {
+		this.id = id;
 		this.elements = ImmutableList.copyOf(elements);
-		this.optionals = optionals;
 	}
 
 	@Override
 	public List<IConfigElement> getElements() {
-		return this.elements;
+		return List.copyOf(this.elements);
 	}
 
 	@Override
 	public Path getPath() {
-		return ConfigFileManager.getConfigPath().resolve(this.ID.getPath() + ".json");
+		return ConfigFileManager.getConfigPath().resolve(this.id.getPath() + ".json");
 	}
 
 	@Override
 	public void saveTo(JsonObject fileJson) {
 		this.elements.forEach(value -> value.saveTo(fileJson));
 
-		UMUConfig.LOGGER.info("Saved config to file: " + this.ID.toString());
+		UMUConfig.LOGGER.info("Saved config to file: " + this.id.toString());
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
 		this.elements.forEach(value -> value.loadFrom(fileJson));
 
-		UMUConfig.LOGGER.info("Loaded config from file: " + this.ID.toString());
-	}
-
-	@Override
-	public void saveTo(NbtCompound sendNBT) {
-		this.elements.forEach(value -> value.saveTo(sendNBT));
-
-		UMUConfig.LOGGER.info("Saved config to packet: " + this.ID.toString());
-	}
-
-	@Override
-	public void loadFrom(NbtCompound receivedNBT) {
-		this.elements.forEach(value -> value.loadFrom(receivedNBT));
-
-		UMUConfig.LOGGER.info("Loaded config from packet: " + this.ID.toString());
+		UMUConfig.LOGGER.info("Loaded config from file: " + this.id.toString());
 	}
 
 	@Override
 	public Identifier getID() {
-		return this.ID;
+		return this.id;
 	}
 
-	@Override
-	public Multimap<Integer, ConfigEntryFactory> optionalSettings() {
-		return this.optionals;
-	}
-
-	@Override
-	public boolean canEdit(PlayerEntity player) {
-		return this.canEditTester.test(player);
+	public static Builder builder(Identifier id) {
+		return new Builder(id);
 	}
 
 	public static class Builder {
-		private final Identifier ID;
+		private final Identifier id;
 		private final List<IConfigElement> elements = new ArrayList<>();
-		private final Multimap<Integer, ConfigEntryFactory> optionals = ArrayListMultimap.create();
-		private Predicate<PlayerEntity> canEditTester = player -> player.hasPermissionLevel(4);
 
-		public Builder(Identifier ID) {
-			this.ID = ID;
+		private Builder(Identifier id) {
+			this.id = id;
 		}
 
 		public Builder addValue(IConfigValue<?> value) {
@@ -101,26 +69,14 @@ public class ConfigContainer implements IConfigContainer {
 			return this;
 		}
 
-		public Builder addCategory(IConfigCategory value) {
-			this.elements.add(value);
-
-			return this;
-		}
-
-		public Builder canEditTester(Predicate<PlayerEntity> value) {
-			this.canEditTester = value;
-
-			return this;
-		}
-
-		public Builder addOptionalSetting(int index, ConfigEntryFactory value) {
-			this.optionals.put(index, value);
+		public Builder addCategory(IConfigCategory category) {
+			this.elements.add(category);
 
 			return this;
 		}
 
 		public ConfigContainer build() {
-			return new ConfigContainer(this.ID, this.canEditTester, this.optionals, this.elements.toArray(new IConfigElement[0]));
+			return new ConfigContainer(this.id, this.elements.toArray(new IConfigElement[0]));
 		}
 	}
 }

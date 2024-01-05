@@ -1,4 +1,4 @@
-package io.github.zemelua.umu_config.api.client.gui.entry;
+package io.github.zemelua.umu_config.old.gui.entry;
 
 import com.google.common.collect.ImmutableList;
 import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;

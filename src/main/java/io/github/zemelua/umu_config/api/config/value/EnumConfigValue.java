@@ -1,87 +1,63 @@
 package io.github.zemelua.umu_config.api.config.value;
 
 import com.google.gson.JsonObject;
-import io.github.zemelua.umu_config.api.client.gui.AbstractConfigScreen;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
-import io.github.zemelua.umu_config.api.client.gui.entry.EnumConfigEntry;
-import net.fabricmc.api.Environment;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import org.jetbrains.annotations.NotNull;
 
-import static net.fabricmc.api.EnvType.*;
+import java.util.Arrays;
 
-public class EnumConfigValue<T extends Enum<T>> extends AbstractConfigValue<T> implements IEnumConfigValue<T> {
-	private final Class<T> clazz;
+public class EnumConfigValue<E extends Enum<E>> extends AbstractConfigValue<E> implements IEnumConfigValue<E> {
+	private final Class<E> clazz;
 
-	public EnumConfigValue(Identifier ID, T defaultValue) {
-		super(ID, defaultValue);
+	public EnumConfigValue(Identifier id, Class<E> clazz, E defaultValue) {
+		super(id, defaultValue);
 
-		this.clazz = defaultValue.getDeclaringClass();
+		this.clazz = clazz;
+	}
+
+	@Override
+	public Class<E> getEnumClass() {
+		return this.clazz;
 	}
 
 	@Override
 	public void saveTo(JsonObject fileJson) {
-		fileJson.addProperty(this.ID.getPath(), this.value.ordinal());
+		fileJson.addProperty(this.getKey(), this.value.name());
 	}
 
 	@Override
 	public void loadFrom(JsonObject fileJson) {
-		if (fileJson.has(this.ID.getPath())) {
-			int ordinal = fileJson.get(this.ID.getPath()).getAsInt();
-			this.value = this.clazz.getEnumConstants()[ordinal];
+		if (fileJson.has(this.getKey())) {
+			this.setValue(Arrays.stream(this.clazz.getEnumConstants())
+					.filter(e -> e.name().equals(fileJson.get(this.getKey()).getAsString()))
+					.findFirst()
+					.orElseThrow());
 		}
 	}
 
-	@Override
-	public void saveTo(NbtCompound sendNBT) {
-		sendNBT.putInt(this.ID.getPath(), this.value.ordinal());
-	}
-
-	@Override
-	public void loadFrom(NbtCompound receivedNBT) {
-		if (receivedNBT.contains(this.ID.getPath())) {
-			int ordinal = receivedNBT.getInt(this.ID.getPath());
-			this.value = this.clazz.getEnumConstants()[ordinal];
-		}
-	}
-
-	@Environment(CLIENT)
-	@Override
-	public AbstractConfigEntry createEntry(AbstractConfigScreen.ValueListWidget parent, int indent, boolean readOnly) {
-		return new EnumConfigEntry<>(this, indent, readOnly);
-	}
-
-	@Environment(CLIENT)
-	@Override
-	public Text getValueText(T value) {
-		return Text.translatable(Util.createTranslationKey("config.enum", this.ID) + "." + value.ordinal());
-	}
-
-	@Override
-	public Class<T> getEnumClass() {
-		return this.clazz;
+	public static <E extends Enum<E>> Builder<E> builder(Identifier id, Class<E> clazz) {
+		return new Builder<>(id, clazz);
 	}
 
 	public static class Builder<E extends Enum<E>> {
-		private final Identifier ID;
-		@NotNull private E defaultValue;
+		private final Identifier id;
+		private final Class<E> clazz;
+		private E defaultValue;
 
-		public Builder(Identifier ID, Class<E> clazz) {
-			this.ID = ID;
+		private Builder(Identifier id, Class<E> clazz) {
+			this.id = id;
+			this.clazz = clazz;
+
 			this.defaultValue = clazz.getEnumConstants()[0];
 		}
 
-		public Builder<E> defaultValue(E value) {
-			this.defaultValue = value;
+		public Builder<E> defaultValue(E defaultValue) {
+			this.defaultValue = defaultValue;
 
 			return this;
 		}
 
 		public EnumConfigValue<E> build() {
-			return new EnumConfigValue<>(this.ID, this.defaultValue);
+			return new EnumConfigValue<>(this.id, this.clazz, this.defaultValue);
 		}
 	}
 }

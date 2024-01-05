@@ -1,9 +1,7 @@
 package io.github.zemelua.umu_config;
 
-import io.github.zemelua.umu_config.api.config.ConfigManager;
 import io.github.zemelua.umu_config.network.NetworkHandler;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,10 +13,10 @@ public class UMUConfig implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		NetworkHandler.initialize();
-		ConfigManager.initialize();
+		// ConfigManager.initialize();
 
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ConfigManager.streamCommon()
-				.forEach(config -> ConfigManager.sendToClient(handler.getPlayer(), config)));
+//		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ConfigManager.streamCommon()
+//				.forEach(config -> ConfigManager.sendToClient(handler.getPlayer(), config)));
 	}
 
 	public static Identifier identifier(String path) {

@@ -2,7 +2,7 @@ package io.github.zemelua.umu_config.config;
 
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.client.gui.AbstractConfigScreen;
-import io.github.zemelua.umu_config.api.client.gui.entry.AbstractConfigEntry;
+import io.github.zemelua.umu_config.old.gui.entry.AbstractConfigEntry;
 import net.fabricmc.api.Environment;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
