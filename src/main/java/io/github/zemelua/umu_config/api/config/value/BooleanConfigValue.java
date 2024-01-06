@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.api.config.value;
 
 import com.google.gson.JsonObject;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 public class BooleanConfigValue extends AbstractConfigValue<Boolean> {
@@ -17,6 +18,18 @@ public class BooleanConfigValue extends AbstractConfigValue<Boolean> {
 	public void loadFrom(JsonObject fileJson) {
 		if (fileJson.has(this.getKey())) {
 			this.setValue(fileJson.get(this.getKey()).getAsBoolean());
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendingNBT) {
+		sendingNBT.putBoolean(this.getKey(), this.getValue());
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.getKey())) {
+			this.setValue(receivedNBT.getBoolean(this.getKey()));
 		}
 	}
 

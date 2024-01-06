@@ -7,6 +7,7 @@ import io.github.zemelua.umu_config.api.config.IConfigElement;
 import io.github.zemelua.umu_config.api.config.category.IConfigCategory;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
@@ -44,6 +45,16 @@ public class ConfigContainer implements IConfigContainer {
 		this.elements.forEach(value -> value.loadFrom(fileJson));
 
 		UMUConfig.LOGGER.info("Loaded config from file: " + this.id.toString());
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendingNBT) {
+
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+
 	}
 
 	@Override

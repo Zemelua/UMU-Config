@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.api.config.value;
 
 import com.google.gson.JsonObject;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
@@ -31,6 +32,20 @@ public class EnumConfigValue<E extends Enum<E>> extends AbstractConfigValue<E> i
 					.filter(e -> e.name().equals(fileJson.get(this.getKey()).getAsString()))
 					.findFirst()
 					.orElseThrow());
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendingNBT) {
+		sendingNBT.putInt(this.getKey(), this.getValue().ordinal());
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.getKey())) {
+			int ordinal = receivedNBT.getInt(this.getKey());
+
+			this.setValue(this.getEnumClass().getEnumConstants()[ordinal]);
 		}
 	}
 

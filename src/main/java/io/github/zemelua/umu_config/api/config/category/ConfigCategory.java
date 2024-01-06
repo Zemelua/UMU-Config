@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.api.config.IConfigElement;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -36,6 +38,22 @@ public class ConfigCategory implements IConfigCategory {
 		if (fileJson.has(this.getKey())) {
 			JsonObject compositeJson = fileJson.get(this.getKey()).getAsJsonObject();
 			this.elements.forEach(element -> element.loadFrom(compositeJson));
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendingNBT) {
+		NbtCompound compositeNBT = new NbtCompound();
+		this.elements.forEach(element -> element.saveTo(compositeNBT));
+
+		sendingNBT.put(this.getKey(), compositeNBT);
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.getKey(), NbtElement.COMPOUND_TYPE)) {
+			NbtCompound compositeNBT = receivedNBT.getCompound(this.getKey());
+			this.elements.forEach(element -> element.loadFrom(compositeNBT));
 		}
 	}
 

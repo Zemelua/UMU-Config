@@ -2,17 +2,15 @@ package io.github.zemelua.umu_config.client;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
+import io.github.zemelua.umu_config.UMUConfig;
 import io.github.zemelua.umu_config.api.util.UMUConfigClothUtils;
-import io.github.zemelua.umu_config.config.ConfigFileManager;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 
 public class ModMenuImpl implements ModMenuApi {
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
 		return parent -> {
-			ConfigBuilder builder = ConfigBuilder.create();
-			ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+//			ConfigBuilder builder = ConfigBuilder.create();
+//			ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 //			GameOptions options = MinecraftClient.getInstance().options;
 //
 //			SubCategoryBuilder subCategoryBuilder = entryBuilder.startSubCategory(Text.literal("subCategory"));
@@ -29,15 +27,17 @@ public class ModMenuImpl implements ModMenuApi {
 //					.addEntry(subCategoryBuilder.build())
 //					.addEntry(entryBuilder.startTextDescription(Text.literal("text")).build());
 
-			UMUConfigClothUtils.getOrCreateCategory(builder, ModClientConfigs.CONFIG);
+//			UMUConfigClothUtils.getOrCreateCategory(builder, ModClientConfigs.CONFIG);
+//
+//			builder.setParentScreen(parent)
+//					.setTitle(ModClientConfigs.CONFIG.getName())
+//					.setSavingRunnable(() -> {
+//						ConfigFileManager.saveFrom(ModClientConfigs.CONFIG);
+//					});
 
-			builder.setParentScreen(parent)
-					.setTitle(ModClientConfigs.CONFIG.getName())
-					.setSavingRunnable(() -> {
-						ConfigFileManager.saveFrom(ModClientConfigs.CONFIG);
-					});
 
-			return builder.build();
+
+			return UMUConfigClothUtils.screen(UMUConfig.MOD_ID, parent).build();
 		};
 	}
 }

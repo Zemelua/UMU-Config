@@ -3,6 +3,7 @@ package io.github.zemelua.umu_config.api.config.container;
 import com.google.gson.JsonObject;
 import io.github.zemelua.umu_config.api.config.IConfigElement;
 import net.fabricmc.api.Environment;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -17,6 +18,8 @@ public interface IConfigContainer {
 	Path getPath();
 	void saveTo(JsonObject fileJson);
 	void loadFrom(JsonObject fileJson);
+	void saveTo(NbtCompound sendingNBT);
+	void loadFrom(NbtCompound receivedNBT);
 	Identifier getID();
 
 	@Environment(CLIENT)

@@ -1,7 +1,6 @@
 package io.github.zemelua.umu_config.mixin;
 
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import io.github.zemelua.umu_config.api.client.config.ConfigManager;
 import net.minecraft.server.command.ReloadCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,19 +12,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 
-import static io.github.zemelua.umu_config.network.NetworkHandler.RELOAD_CONFIGS_TO_CLIENT;
-
 @Mixin(ReloadCommand.class)
 public abstract class ReloadCommandMixin {
 	@Inject(method = "tryReloadDataPacks",
 			at = @At(value = "RETURN"))
 	private static void reloadConfigs(Collection<String> dataPacks, ServerCommandSource source, CallbackInfo callback) {
-//		ConfigManager.streamCommon().forEach(ConfigFileManager::loadTo);
-//		ConfigManager.streamCommon().forEach(ConfigFileManager::saveFrom);
+		ConfigManager.INSTANCE.reloadAll();
 
 		@Nullable ServerPlayerEntity sender = source.getPlayer();
 		if (sender != null) {
-			ServerPlayNetworking.send(source.getPlayer(), RELOAD_CONFIGS_TO_CLIENT, PacketByteBufs.create());
+			source.getServer().getPlayerManager().getPlayerList().forEach(p -> {
+				ConfigManager.INSTANCE.stream().forEach(c -> {
+					ConfigManager.sendToClient(p, c);
+				});
+			});
 		}
 	}
 }

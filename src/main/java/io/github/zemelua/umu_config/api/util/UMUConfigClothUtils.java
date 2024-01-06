@@ -1,20 +1,44 @@
 package io.github.zemelua.umu_config.api.util;
 
+import io.github.zemelua.umu_config.api.client.config.ConfigManager;
 import io.github.zemelua.umu_config.api.config.category.IConfigCategory;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.api.config.value.IConfigValue;
 import io.github.zemelua.umu_config.api.config.value.IEnumConfigValue;
 import io.github.zemelua.umu_config.api.config.value.IRangedConfigValue;
+import io.github.zemelua.umu_config.client.ClientConfigManager;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.impl.builders.*;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 
+import java.util.List;
 import java.util.Optional;
 
 public final class UMUConfigClothUtils {
+	public static ConfigBuilder screen(String modID, Screen parent) {
+		ConfigBuilder builder = ConfigBuilder.create();
+		List<IConfigContainer> configs = ConfigManager.INSTANCE.fromModID(modID).toList();
+		List<IConfigContainer> clientConfigs = ClientConfigManager.INSTANCE.fromModID(modID).toList();
+
+		configs.forEach(c -> {
+			ConfigCategory category = builder.getOrCreateCategory(c.getName());
+		});
+
+		builder.setParentScreen(parent)
+				.setTitle(Text.of(FabricLoader.getInstance().getModContainer(modID).map(c -> c.getMetadata().getName()).get()))
+				.setSavingRunnable(() -> {
+					ConfigManager.INSTANCE.saveAll();
+					ClientConfigManager.INSTANCE.saveAll();
+				});
+
+		return builder;
+	}
+
 	public static ConfigCategory getOrCreateCategory(ConfigBuilder builder, IConfigContainer container) {
 		ConfigCategory category = builder.getOrCreateCategory(container.getName());
 

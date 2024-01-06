@@ -1,6 +1,7 @@
 package io.github.zemelua.umu_config.api.config.value;
 
 import com.google.gson.JsonObject;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 public class IntegerConfigValue extends AbstractRangedConfigValue<Integer> {
@@ -17,6 +18,18 @@ public class IntegerConfigValue extends AbstractRangedConfigValue<Integer> {
 	public void loadFrom(JsonObject fileJson) {
 		if (fileJson.has(this.getKey())) {
 			this.setValue(fileJson.get(this.getKey()).getAsInt());
+		}
+	}
+
+	@Override
+	public void saveTo(NbtCompound sendingNBT) {
+		sendingNBT.putInt(this.getKey(), this.getValue());
+	}
+
+	@Override
+	public void loadFrom(NbtCompound receivedNBT) {
+		if (receivedNBT.contains(this.getKey())) {
+			this.setValue(receivedNBT.getInt(this.getKey()));
 		}
 	}
 
