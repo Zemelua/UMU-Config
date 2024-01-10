@@ -19,7 +19,7 @@ public class ModClientConfigs implements IConfigProvider {
 			.defaultValue(3)
 			.range(0, 10)
 			.build();
-	public static final EnumConfigValue<TestEnum> TEST_ENUM = EnumConfigValue.<TestEnum>builder(UMUConfig.identifier("test_enum"), TestEnum.class)
+	public static final EnumConfigValue<TestEnum> TEST_ENUM = EnumConfigValue.builder(UMUConfig.identifier("test_enum"), TestEnum.class)
 			.defaultValue(TestEnum.GOLD)
 			.build();
 	public static final IConfigContainer CONFIG = ConfigContainer.builder(UMUConfig.identifier("umu_config_client"))
