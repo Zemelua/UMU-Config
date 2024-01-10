@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class UMUConfigClothUtils {
+	@Deprecated
 	public static ConfigBuilder screen(String modID, Screen parent) {
 		ConfigBuilder builder = ConfigBuilder.create();
 		List<IConfigContainer> configs = ConfigManager.INSTANCE.fromModID(modID).toList();
@@ -39,6 +40,7 @@ public final class UMUConfigClothUtils {
 		return builder;
 	}
 
+	@Deprecated
 	public static ConfigCategory getOrCreateCategory(ConfigBuilder builder, IConfigContainer container) {
 		ConfigCategory category = builder.getOrCreateCategory(container.getName());
 
@@ -53,6 +55,7 @@ public final class UMUConfigClothUtils {
 		return category;
 	}
 
+	@Deprecated
 	public static SubCategoryBuilder subCategory(ConfigBuilder builder, IConfigCategory category) {
 		SubCategoryBuilder subCategoryBuilder = builder.entryBuilder().startSubCategory(createCategoryName(category));
 		category.getElements().forEach(e -> {
@@ -66,6 +69,7 @@ public final class UMUConfigClothUtils {
 		return subCategoryBuilder;
 	}
 
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static Optional<AbstractConfigListEntry<?>> auto(ConfigBuilder builder, IConfigValue<?> value) {
 		if (value.getValue() instanceof Boolean) {
