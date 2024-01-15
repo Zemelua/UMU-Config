@@ -21,5 +21,5 @@ public final class NetworkHandler {
 		});
 	}
 
-	@Deprecated private NetworkHandler() {}
+	private NetworkHandler() {}
 }

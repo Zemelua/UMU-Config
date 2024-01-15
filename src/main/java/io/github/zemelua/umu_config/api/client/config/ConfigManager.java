@@ -8,8 +8,6 @@ import io.github.zemelua.umu_config.api.config.IConfigProvider;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
 import io.github.zemelua.umu_config.network.NetworkHandler;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
@@ -28,7 +26,6 @@ public final class ConfigManager {
 
 	private final Map<String, ImmutableList<IConfigContainer>> configs = new HashMap<>();
 
-	@Environment(EnvType.CLIENT)
 	@ApiStatus.Internal
 	public void initialize(String entrypointKey) {
 		List<EntrypointContainer<IConfigProvider>> modConfigs = FabricLoader.getInstance().getEntrypointContainers(entrypointKey, IConfigProvider.class);

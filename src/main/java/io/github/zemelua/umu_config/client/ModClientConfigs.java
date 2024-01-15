@@ -8,6 +8,15 @@ import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.api.config.value.BooleanConfigValue;
 import io.github.zemelua.umu_config.api.config.value.EnumConfigValue;
 import io.github.zemelua.umu_config.api.config.value.IntegerConfigValue;
+import io.github.zemelua.umu_config.api.util.UMUConfigClothUtils;
+import io.github.zemelua.umu_config.config.ConfigFileManager;
+import me.shedaniel.clothconfig2.api.ConfigBuilder;
+import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
 
 import java.util.List;
 
@@ -41,5 +50,26 @@ public class ModClientConfigs implements IConfigProvider {
 		return List.of(CONFIG);
 	}
 
-	public ModClientConfigs() {}
+	@Environment(EnvType.CLIENT)
+	public static ConfigBuilder asScreen(Screen parent) {
+		ConfigBuilder builder = ConfigBuilder.create();
+		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+
+		SubCategoryBuilder subCategoryBuilder = entryBuilder.startSubCategory(Text.literal("Additional"));
+		subCategoryBuilder.add(UMUConfigClothUtils.selector(builder, TEST_ENUM).build());
+
+		builder.getOrCreateCategory(Text.literal("UMU Config Client"))
+				.addEntry(UMUConfigClothUtils.toggle(builder, TEST_BOOLEAN).build())
+				.addEntry(UMUConfigClothUtils.field(builder, TEST_INTEGER).build())
+				.addEntry(subCategoryBuilder.build());
+
+
+		builder.setParentScreen(parent)
+				.setTitle(CONFIG.getName())
+				.setSavingRunnable(() -> ConfigFileManager.saveFrom(CONFIG));
+
+		return builder;
+	}
+
+	private ModClientConfigs() {}
 }

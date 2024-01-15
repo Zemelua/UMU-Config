@@ -21,11 +21,9 @@ public abstract class ReloadCommandMixin {
 
 		@Nullable ServerPlayerEntity sender = source.getPlayer();
 		if (sender != null) {
-			source.getServer().getPlayerManager().getPlayerList().forEach(p -> {
-				ConfigManager.INSTANCE.stream().forEach(c -> {
-					ConfigManager.sendToClient(p, c);
-				});
-			});
+			for (ServerPlayerEntity player : source.getServer().getPlayerManager().getPlayerList()) {
+				ConfigManager.INSTANCE.stream().forEach(c -> ConfigManager.sendToClient(player, c));
+			}
 		}
 	}
 }

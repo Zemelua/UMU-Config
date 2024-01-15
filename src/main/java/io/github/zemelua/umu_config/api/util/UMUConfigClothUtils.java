@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class UMUConfigClothUtils {
+	@SuppressWarnings({"unused", "OptionalGetWithoutIsPresent"})
 	@Deprecated
 	public static ConfigBuilder screen(String modID, Screen parent) {
 		ConfigBuilder builder = ConfigBuilder.create();

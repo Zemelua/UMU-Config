@@ -32,4 +32,41 @@ public class DoubleConfigValue extends AbstractRangedConfigValue<Double> {
 			this.setValue(receivedNBT.getDouble(this.getKey()));
 		}
 	}
+
+	public static class Builder {
+		private final Identifier id;
+		private double defaultValue = 0.0D;
+		private double minValue = 0.0D;
+		private double maxValue = 1.0D;
+
+		private Builder(Identifier id) {
+			this.id = id;
+		}
+
+		public Builder defaultValue(double defaultValue) {
+			this.defaultValue = defaultValue;
+
+			return this;
+		}
+
+		public Builder min(double minValue) {
+			this.minValue = minValue;
+
+			return this;
+		}
+
+		public Builder max(double maxValue) {
+			this.maxValue = maxValue;
+
+			return this;
+		}
+
+		public Builder range(double min, double max) {
+			return this.min(min).max(max);
+		}
+
+		public DoubleConfigValue build() {
+			return new DoubleConfigValue(this.id, this.defaultValue, this.minValue, this.maxValue);
+		}
+	}
 }

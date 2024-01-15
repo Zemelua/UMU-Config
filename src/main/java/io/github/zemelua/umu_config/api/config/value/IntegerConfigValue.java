@@ -66,10 +66,7 @@ public class IntegerConfigValue extends AbstractRangedConfigValue<Integer> {
 		}
 
 		public Builder range(int min, int max) {
-			this.min(min);
-			this.max(max);
-
-			return this;
+			return this.min(min).max(max);
 		}
 
 		public IntegerConfigValue build() {

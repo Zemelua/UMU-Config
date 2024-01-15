@@ -3,7 +3,14 @@
 	"gui.read_only": "Read Only",
 	"gui.tooltip.apply_multiplay": "Pressing this button sends the edited config to the server. The new edits will be reflected in the server's game logic and sent to each player. If you have any concerns about this, please contact the server administrator.",
 	"gui.tooltip.not_have_permission": "You are viewing a config for a multiplayer server. You have not the permission to edit this. If you wish to edit it, please contact the server administrator. If you want to edit this config for your environment, you can log out from the world and edit it from the main menu.",
+
+	"screen.config_select.title": "Select Config to Edit",
+	"screen.config_select.label.client": "Client Config",
+	"screen.config_select.label.common": "Common Config",
+	"screen.config_multiplayer_settings.tooltip": "The common settings of the server are currently displayed. To edit them, edit the config file of the server directly. After disconnecting from the world, you can edit the common config on the client side.",
+
 	"config.error.failed_receive_config": "The server failed to receive the changes you sent. It is possible that the mod version of the edited config is different or there is some bug.",
+
 	"modmenu.descriptionTranslation.umu_config": "A complete config mod, even a server config is editable from the GUI.",
 
 	"config.umu_config.umu_config_client": "Client Config",

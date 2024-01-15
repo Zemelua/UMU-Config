@@ -49,12 +49,12 @@ public class ConfigContainer implements IConfigContainer {
 
 	@Override
 	public void saveTo(NbtCompound sendingNBT) {
-
+		this.elements.forEach(value -> value.saveTo(sendingNBT));
 	}
 
 	@Override
 	public void loadFrom(NbtCompound receivedNBT) {
-
+		this.elements.forEach(value -> value.loadFrom(receivedNBT));
 	}
 
 	@Override
