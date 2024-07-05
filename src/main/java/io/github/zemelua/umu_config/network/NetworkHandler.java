@@ -3,6 +3,7 @@ package io.github.zemelua.umu_config.network;
 import io.github.zemelua.umu_config.UMUConfig;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
@@ -13,11 +14,13 @@ public final class NetworkHandler {
 
 	@Environment(CLIENT)
 	public static void initializeClient() {
-		ClientPlayNetworking.registerGlobalReceiver(CHANNEL_SYNC_CONFIG_TO_CLIENT, (client, handler, packet, sender) -> {
-			final Identifier configID = packet.readIdentifier();
-			final NbtCompound values = packet.readNbt();
+		PayloadTypeRegistry.playS2C().register(ConfigPayload.ID, ConfigPayload.CODEC);
 
-			client.execute(() -> PacketHandlers.syncConfigOnClient(configID, values));
+		ClientPlayNetworking.registerGlobalReceiver(ConfigPayload.ID, (packet, context) -> {
+			final Identifier configID = packet.id();
+			final NbtCompound values = packet.nbt();
+
+			context.client().execute(() -> PacketHandlers.syncConfigOnClient(configID, values));
 		});
 	}
 

@@ -48,6 +48,4 @@ public final class ModConfigs implements IConfigProvider {
 
 		return builder;
 	}
-
-	private ModConfigs() {}
 }

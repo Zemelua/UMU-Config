@@ -7,13 +7,11 @@ import com.mojang.datafixers.util.Pair;
 import io.github.zemelua.umu_config.api.config.IConfigProvider;
 import io.github.zemelua.umu_config.api.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.config.ConfigFileManager;
-import io.github.zemelua.umu_config.network.NetworkHandler;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import io.github.zemelua.umu_config.network.ConfigPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
@@ -69,12 +67,9 @@ public final class ConfigManager {
 	}
 
 	public static void sendToClient(ServerPlayerEntity player, IConfigContainer config) {
-		PacketByteBuf packet = PacketByteBufs.create();
 		NbtCompound values = new NbtCompound();
 		config.saveTo(values);
-		packet.writeIdentifier(config.getID());
-		packet.writeNbt(values);
 
-		ServerPlayNetworking.send(player, NetworkHandler.CHANNEL_SYNC_CONFIG_TO_CLIENT, packet);
+		ServerPlayNetworking.send(player, new ConfigPayload(config.getID(), values));
 	}
 }

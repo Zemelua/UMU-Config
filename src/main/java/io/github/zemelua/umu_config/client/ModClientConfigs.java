@@ -70,6 +70,4 @@ public class ModClientConfigs implements IConfigProvider {
 
 		return builder;
 	}
-
-	private ModClientConfigs() {}
 }
