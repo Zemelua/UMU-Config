@@ -7,7 +7,6 @@ import io.github.zemelua.umu_config.client.gui.ClientConfigScreen;
 import io.github.zemelua.umu_config.client.gui.ConfigsScreen;
 import io.github.zemelua.umu_config.config.container.IConfigContainer;
 import io.github.zemelua.umu_config.util.ModUtils;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -29,12 +28,11 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static io.github.zemelua.umu_config.network.NetworkHandler.*;
-import static net.fabricmc.api.EnvType.*;
 
 public final class ConfigManager {
 	@NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
-	@Environment(CLIENT) @NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CLIENT_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
-	@Environment(SERVER) @NotNull @SuppressWarnings({"unused", "FieldMayBeFinal"}) private static ImmutableMap<String, ImmutableList<IConfigContainer>> SERVER_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
+	@NotNull private static ImmutableMap<String, ImmutableList<IConfigContainer>> CLIENT_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
+	@NotNull @SuppressWarnings({"unused", "FieldMayBeFinal"}) private static ImmutableMap<String, ImmutableList<IConfigContainer>> SERVER_CONFIGS = ImmutableMap.of("dummy", ImmutableList.of());
 
 	@Internal
 	public static void initialize() {
@@ -50,7 +48,7 @@ public final class ConfigManager {
 		streamCommon().forEach(ConfigFileManager::saveFrom);
 	}
 
-	@Environment(CLIENT)
+
 	@Internal
 	public static void initializeClient() {
 		List<EntrypointContainer<IConfigProvider>> modConfigs = FabricLoader.getInstance().getEntrypointContainers("umu-config-client", IConfigProvider.class);
@@ -89,13 +87,12 @@ public final class ConfigManager {
 		ServerPlayNetworking.send(player, CHANNEL_SYNC_CONFIG_TO_CLIENT, packet);
 	}
 
-	@Environment(SERVER)
 	@Internal
 	@SuppressWarnings("unused")
 	public static void initializeServer() {
 	}
 
-	@Environment(CLIENT)
+
 	public static Optional<Screen> openConfigScreen(Screen parent, String modID) {
 		List<IConfigContainer> config = Stream.concat(byModIDCommon(modID).stream(), byModIDClient(modID).stream()).toList();
 		if (config.isEmpty()) return Optional.empty();
@@ -113,7 +110,7 @@ public final class ConfigManager {
 		return configs == null ? List.of() : new ArrayList<>(configs);
 	}
 
-	@Environment(CLIENT)
+
 	public static List<IConfigContainer> byModIDClient(String modID) {
 		@Nullable List<IConfigContainer> configs = CLIENT_CONFIGS.get(modID);
 
@@ -131,7 +128,7 @@ public final class ConfigManager {
 				.flatMap(Collection::stream);
 	}
 
-	@Environment(CLIENT)
+
 	public static Stream<IConfigContainer> streamClient() {
 		return CLIENT_CONFIGS.values().stream()
 				.flatMap(Collection::stream);
